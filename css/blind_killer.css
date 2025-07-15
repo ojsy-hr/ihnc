@@ -1,0 +1,454 @@
+/* Base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212;
+  color: #eee;
+  text-align: center;
+  user-select: none;
+}
+
+/* Headings */
+h1 {
+  font-size: 2.5rem;
+  color: #61dafb;
+  margin-top: 30px;
+}
+
+a {
+  color: #61dafb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover, a:focus {
+  color: #21a1f1;
+  outline: none;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #61dafb;
+}
+
+/* Navbar */
+nav {
+  background: #1f1f1f;
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.nav-menu-wrapper {
+  position: relative;
+}
+
+/* Show toggle button only on small screens */
+.nav-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  color: #61dafb;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #1f1f1f;
+    position: absolute;
+    top: 100%; /* appears directly below the toggle */
+    right: 0; /* aligns with the button */
+    width: 200px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    border-radius: 6px;
+    z-index: 1000;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    border-bottom: 1px solid #333;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+
+/* Containers */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #1f1f1f;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Controls */
+.controls {
+  margin-top: 20px;
+}
+
+input[type=range],
+button {
+  font-size: 1rem;
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Buttons */
+button {
+  background-color: #282828;
+  color: #61dafb;
+  border: 2px solid #61dafb;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+button:hover {
+  background-color: #61dafb;
+  color: #121212;
+}
+
+#resetBtn {
+  background-color: #555;
+  display: none;
+}
+#resetBtn:hover {
+  background-color: #333;
+}
+
+#revealListBtn {
+  display: none;
+  margin-top: 20px;
+  background-color: #282828;
+  border: 2px solid #61dafb;
+  color: #61dafb;
+}
+#revealListBtn:hover {
+  background-color: #61dafb;
+  color: #121212;
+}
+
+/* Card display */
+#cardDisplay {
+  margin-top: 30px;
+}
+.card-img {
+  width: 180px;
+  background-color: #000;
+  padding: 3px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+.card-img:hover {
+  transform: scale(1.05);
+}
+.grayed-out {
+  filter: grayscale(100%) brightness(0.7);
+}
+
+/* Card list layout */
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+.card-with-lives {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.9);
+  animation: layDownCard 0.4s ease forwards;
+}
+
+.lives {
+  margin-top: 8px;
+  font-size: 1.5rem;
+  color: red;
+  transition: opacity 0.3s ease;
+}
+
+.number {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #eee;
+}
+
+#drawCount {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+/* Skull overlay */
+.skull-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+}
+
+/* Winner overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.overlay.hidden {
+  display: none;
+}
+.overlay-content {
+  background: #1f1f1f;
+  padding: 30px 40px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+.overlay-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #61dafb;
+}
+#playAgainBtn {
+  background-color: #282828;
+  color: #61dafb;
+  font-size: 1.2rem;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: 2px solid #61dafb;
+}
+#playAgainBtn:hover {
+  background-color: #61dafb;
+  color: #121212;
+}
+#homeBtn {
+  margin-top: 20px;
+  background-color: #555;
+  color: #eee;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+#homeBtn:hover {
+  background-color: #777;
+}
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  font-size: 0.9rem;
+  color: #555;
+  background: #1a1a1a;
+  padding: 1rem;
+}
+
+/* Confirm Box */
+.confirm-box {
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 300px;
+}
+.confirm-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+.confirm-buttons button {
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 2px solid #61dafb;
+  background: #282828;
+  color: #61dafb;
+}
+.confirm-buttons button:hover {
+  background: #61dafb;
+  color: #121212;
+}
+
+#spacing {
+  margin-bottom: 75px;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.slider {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  background-color: #d43e3e;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  top: 2px;
+  background-color: #eee;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.switch input:checked + .slider {
+  background-color: #1b8a49;
+}
+.switch input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+.label-text {
+  color: #eee;
+  font-size: 0.9rem;
+}
+.switch input:not(:checked) ~ .label-text::before {
+  content: "Audio OFF";
+}
+.switch input:checked ~ .label-text::before {
+  content: "Audio ON";
+}
+
+
+
+/* Animations */
+@keyframes layDownCard {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 1300px) {
+  .container{
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .card-img, .skull-overlay {
+    width: 140px;
+  }
+  .number {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-img, .skull-overlay {
+    width: 120px;
+  }
+  button,
+  input[type=range] {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+  .number {
+    font-size: 2.5rem;
+  }
+  .lives {
+    font-size: 1.2rem;
+  }
+  .skull-overlay {
+    font-size: 2.5rem;
+  }
+  .container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-img, .skull-overlay {
+    width: 100px;
+  }
+  button,
+  input[type=range] {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  .number {
+    font-size: 2rem;
+  }
+  .lives {
+    font-size: 1rem;
+  }
+  .skull-overlay {
+    font-size: 2rem;
+  }
+  .container {
+    padding: 1rem;
+    margin: 0.5rem;
+    border-radius: 0.75rem;
+  }
+}
