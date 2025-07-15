@@ -4,24 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ihavenocards - Interactive Card Games for Darts & Pool</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
     <nav>
-      <div class="logo">ihavenocards</div>
-      <div class="nav-links" role="navigation" aria-label="Primary">
-        <a href="darts.html">Darts</a>
-        <a href="pool.html">Pool</a>
+      <a href="index.html" class="logo">ihavenocards</a>
+
+      <div class="nav-menu-wrapper">
+        <button
+          class="nav-toggle"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <div class="nav-links">
+          <a href="pages/how-it-works.html">How It Works</a>
+          <a href="pages/about.html">About</a>
+          <a href="pages/feedback.html">Feedback</a>
+        </div>
       </div>
     </nav>
 
     <div class="cards-background" aria-hidden="true">
       <div class="cards-track-wrapper">
         <div class="cards-track">
-          🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪
+          🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪 🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮
         </div>
         <div class="cards-track">
-          🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮
+          🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪 🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮
         </div>
       </div>
     </div>
@@ -29,9 +41,7 @@
     <main>
       <div class="content-wrapper">
         <h1>ihavenocards</h1>
-        <p>
-          Forgot your cards? Don’t worry — we’ve got you covered.
-        </p>
+        <p>Forgot your cards, or just don't have any to hand? <br> Don't worry - we've got you covered.</p>
         <div class="game-links" role="region" aria-label="Game Links">
           <a
             href="darts.html"
@@ -53,6 +63,6 @@
 
     <footer>&copy; 2025 ihavenocards. All rights reserved.</footer>
 
-    <script src="js/main.js"></script>
+    <script src="js/nav-button.js"></script>
   </body>
 </html>

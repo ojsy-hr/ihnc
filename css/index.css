@@ -1,22 +1,29 @@
 /* Reset and base */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #121212;
   color: #eee;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  user-select: none;
 }
+
 a {
   color: #61dafb;
   text-decoration: none;
   transition: color 0.3s ease;
 }
-a:hover, a:focus {
+
+a:hover,
+a:focus {
   color: #21a1f1;
   outline: none;
 }
@@ -28,7 +35,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
 .logo {
   font-weight: 700;
@@ -76,10 +83,10 @@ main {
 .cards-track-wrapper {
   display: flex;
   width: max-content;
-  animation: scrollCards 90s linear infinite;
-  font-size: 4rem; /* safe to remove, overridden by .cards-track */
+  animation: scrollCards 120s linear infinite;
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
   white-space: nowrap;
+  gap: 4rem;
 }
 
 .cards-track {
@@ -90,7 +97,6 @@ main {
   line-height: 1;
   padding-top: 1rem; /* optional vertical adjustment */
 }
-
 
 .cards-track span {
   display: inline-block;
@@ -105,7 +111,6 @@ main {
     transform: translateX(-50%);
   }
 }
-
 
 .content-wrapper {
   position: relative;
@@ -148,7 +153,8 @@ main p {
   align-items: center;
   gap: 0.5rem;
 }
-.game-button:hover, .game-button:focus {
+.game-button:hover,
+.game-button:focus {
   background: #61dafb;
   color: #121212;
   outline: none;
@@ -167,6 +173,50 @@ footer {
   color: #555;
   background: #1a1a1a;
   user-select: none;
+}
+
+.nav-menu-wrapper {
+  position: relative;
+}
+
+/* Show toggle button only on small screens */
+.nav-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  color: #61dafb;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #1f1f1f;
+    position: absolute;
+    top: 100%; /* appears directly below the toggle */
+    right: 0; /* aligns with the button */
+    width: 200px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    border-radius: 6px;
+    z-index: 1000;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    border-bottom: 1px solid #333;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
 }
 
 /* Responsive */
