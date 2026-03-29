@@ -7,10 +7,28 @@
     <link rel="stylesheet" href="../css/cricket.css" />
   </head>
   <body>
+    <nav>
+      <a href="../index.html" class="logo">ihavenocards</a>
+
+      <div class="nav-menu-wrapper">
+        <button
+          class="nav-toggle"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <div class="nav-links">
+          <a href="how-it-works.html">How It Works</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </div>
+      </div>
+    </nav>
+
     <div class="container">
       <h1>Cricket 🎯</h1>
-
-      <button id="homeBtn" onclick="goHome()">Back to Home</button>
 
       <div class="player-settings">
         <button id="startGame">Start Game</button>
@@ -42,12 +60,13 @@
       <div id="scoreboard" class="hidden"></div>
 
       <div id="controls" class="hidden">
+        <div id="multiplierButtons"></div>
         <div id="numberButtons"></div>
       </div>
 
       <!-- End Game Confirmation Popup -->
-      <div id="endGamePopup" class="popup hidden">
-        <div class="popup-content">
+      <div id="endGamePopup" class="overlay hidden">
+        <div class="overlay-content">
           <h3>End Game?</h3>
           <p>This will reset everything and start over.</p>
           <button id="confirmEndGame" style="margin-right: 1rem">Yes</button>
@@ -56,17 +75,17 @@
       </div>
 
       <!-- Next Player Popup -->
-      <div id="nextPlayerPopup" class="popup hidden">
-        <div class="popup-content">
+      <div id="nextPlayerPopup" class="overlay hidden">
+        <div class="overlay-content">
           <h3>Turn Complete</h3>
-          <p>Next player's turn</p>
+          <p id="nextPlayerMessage">Next player's turn</p>
           <button id="nextPlayerContinue">Continue</button>
         </div>
       </div>
 
       <!-- Winner Popup -->
-      <div id="winnerPopup" class="popup hidden">
-        <div class="popup-content">
+      <div id="winnerPopup" class="overlay hidden">
+        <div class="overlay-content">
           <h3>Game Over!</h3>
           <p id="winnerName"></p>
           <button id="closeWinnerPopup">Close</button>
@@ -74,6 +93,7 @@
       </div>
     </div>
 
-    <script src="../js/cricket.js"></script>
+    <script src="../js/cricket.js" defer></script>
+    <script src="../js/nav-button.js" defer></script>
   </body>
 </html>
