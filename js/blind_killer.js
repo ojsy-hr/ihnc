@@ -11,7 +11,7 @@ const numberToLabel = {
   10: "ten",
 };
 
-const lifeLostSound = new Audio("../assets/sounds/life-lost.wav");
+const lifeLostSound = new Audio("../../assets/sounds/life-lost.wav");
 
 let soundEnabled = true;
 
@@ -26,7 +26,7 @@ function getDeck(max) {
     deck.push({
       n: i,
       name: label.charAt(0).toUpperCase() + label.slice(1) + " of Spades",
-      img: `../assets/cards/spade/spade_${label}.png`,
+      img: `../../assets/cards/spade/spade_${label}.png`,
       lives: 3,
     });
   }
@@ -264,7 +264,7 @@ document.getElementById("viewResultsBtn").addEventListener("click", () => {
 });
 
 function goHome() {
-  window.location.href = "../index.html";
+  window.location.href = "../../index.html";
 }
 
 resetDeck();
