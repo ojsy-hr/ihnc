@@ -371,7 +371,11 @@ function showNextPlayerPopup() {
 function updateTurnDisplay() {
   const player = players[currentPlayerIndex];
   const remaining = dartsPerTurn - dartsThrown;
-  currentTurnDisplay.innerHTML = `<strong>${player.name}</strong> — ${remaining} dart${remaining !== 1 ? "s" : ""} remaining`;
+  currentTurnDisplay.innerHTML = "";
+  const nameEl = document.createElement("strong");
+  nameEl.textContent = player.name;
+  currentTurnDisplay.appendChild(nameEl);
+  currentTurnDisplay.appendChild(document.createTextNode(` — ${remaining} dart${remaining !== 1 ? "s" : ""} remaining`));
 }
 
 function getHitDisplay(hits) {
