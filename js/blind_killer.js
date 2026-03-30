@@ -15,6 +15,8 @@ const lifeLostSound = new Audio("../../assets/sounds/life-lost.wav");
 
 let soundEnabled = true;
 
+const STORAGE_KEY = "blind_killer_game_state";
+
 document.getElementById("soundToggle").addEventListener("change", (e) => {
   soundEnabled = e.target.checked;
 });
@@ -41,6 +43,71 @@ let cardListContainer;
 let maxSelected = 10;
 let playerCount = 1;
 let playerDraws = 0;
+let cardListRevealed = false;
+
+// --- Session Storage ---
+function saveState() {
+  const state = {
+    remaining,
+    used,
+    drawCount,
+    sliderLocked,
+    maxSelected,
+    playerCount,
+    playerDraws,
+    cardListRevealed,
+  };
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function clearSavedState() {
+  sessionStorage.removeItem(STORAGE_KEY);
+}
+
+function restoreState() {
+  const saved = sessionStorage.getItem(STORAGE_KEY);
+  if (!saved) return false;
+
+  try {
+    const state = JSON.parse(saved);
+    // Only restore if a game was actually in progress
+    if (!state.sliderLocked) return false;
+
+    remaining = state.remaining;
+    used = state.used;
+    drawCount = state.drawCount;
+    sliderLocked = state.sliderLocked;
+    maxSelected = state.maxSelected;
+    playerCount = state.playerCount;
+    playerDraws = state.playerDraws;
+    cardListRevealed = state.cardListRevealed;
+
+    // Hide setup controls
+    document.getElementById("rangeControls").style.display = "none";
+    document.getElementById("playerControls").style.display = "none";
+    document.getElementById("resetBtn").style.display = "inline-block";
+
+    // Hide rules overlay on restore
+    document.getElementById("rulesOverlay").classList.add("hidden");
+
+    updateDrawCount();
+
+    // If all cards drawn, hide draw button
+    if (playerDraws >= maxSelected || remaining.length === 0) {
+      document.querySelector("button[onclick='showRandomCard()']").style.display = "none";
+    }
+
+    // If card list was already revealed, re-render it
+    if (cardListRevealed) {
+      showCardList();
+    }
+
+    return true;
+  } catch (e) {
+    clearSavedState();
+    return false;
+  }
+}
 
 function updateRange(value) {
   if (value < 5) value = 5;
@@ -67,6 +134,7 @@ function resetDeck() {
   used = [];
   drawCount = 0;
   playerDraws = 0;
+  cardListRevealed = false;
   updateDrawCount();
   updateRange(maxSelected);
   updatePlayers(document.getElementById("playerSelect").value);
@@ -82,6 +150,8 @@ function resetDeck() {
 
   document.getElementById("winnerOverlay").classList.add("hidden");
   document.getElementById("allDrawnOverlay").classList.add("hidden");
+
+  clearSavedState();
 }
 
 function showRandomCard() {
@@ -132,6 +202,8 @@ function showRandomCard() {
       playerDraws++;
     }
   }
+
+  saveState();
 }
 
 function updateDrawCount() {
@@ -140,6 +212,7 @@ function updateDrawCount() {
 
 function enableSlider() {
   sliderLocked = false;
+  cardListRevealed = false;
   document.getElementById("rangeControls").style.display = "block";
   document.getElementById("playerControls").style.display = "block";
   document.getElementById("resetBtn").style.display = "none";
@@ -153,6 +226,7 @@ function getHeartIcons(lives) {
 function checkForWinner() {
   const aliveCards = used.filter((card) => card.lives > 0);
   if (aliveCards.length === 1) {
+    clearSavedState();
     showWinner(aliveCards[0]);
   }
 }
@@ -166,7 +240,14 @@ function showWinner(card) {
 }
 
 function showCardList() {
+  cardListRevealed = true;
   const sortedCards = [...used].sort((a, b) => a.n - b.n);
+
+  // Remove existing list if present
+  const existingList = document.getElementById("cardList");
+  if (existingList) {
+    existingList.remove();
+  }
 
   cardListContainer = document.createElement("div");
   cardListContainer.id = "cardList";
@@ -186,12 +267,16 @@ function showCardList() {
 
     const skullOverlay = document.createElement("div");
     skullOverlay.className = "skull-overlay";
-    skullOverlay.style.display = "none";
+    skullOverlay.style.display = card.lives === 0 ? "flex" : "none";
     skullOverlay.textContent = "💀";
 
     const livesText = document.createElement("div");
     livesText.className = "lives";
     livesText.textContent = getHeartIcons(card.lives);
+
+    if (card.lives === 0) {
+      img.classList.add("grayed-out");
+    }
 
     cardElement.appendChild(img);
     cardElement.appendChild(skullOverlay);
@@ -225,6 +310,7 @@ function showCardList() {
             }
           }, 200);
           cleanup();
+          saveState();
         };
 
         const cleanup = () => {
@@ -251,6 +337,8 @@ function showCardList() {
       }
     });
   });
+
+  saveState();
 }
 
 document.getElementById("playAgainBtn").addEventListener("click", () => {
@@ -267,4 +355,24 @@ function goHome() {
   window.location.href = "../../index.html";
 }
 
-resetDeck();
+// Rules overlay
+const RULES_SEEN_KEY = "blind_killer_rules_seen";
+
+document.getElementById("closeRulesBtn").addEventListener("click", () => {
+  document.getElementById("rulesOverlay").classList.add("hidden");
+  sessionStorage.setItem(RULES_SEEN_KEY, "true");
+});
+
+document.getElementById("howToPlayBtn").addEventListener("click", () => {
+  document.getElementById("rulesOverlay").classList.remove("hidden");
+});
+
+// Hide rules if already dismissed this session
+if (sessionStorage.getItem(RULES_SEEN_KEY)) {
+  document.getElementById("rulesOverlay").classList.add("hidden");
+}
+
+// Restore saved game or start fresh
+if (!restoreState()) {
+  resetDeck();
+}

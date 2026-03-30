@@ -6,6 +6,9 @@ const dartsPerTurn = 3;
 let instantWinMode = false;
 let selectedMultiplier = 1; // 1 = single, 2 = double, 3 = triple
 let turnHistory = []; // for undo: [{number, marks, points}]
+let gameActive = false;
+
+const STORAGE_KEY = "cricket_game_state";
 
 // DOM Elements
 const playerCountSlider = document.getElementById("playerCount");
@@ -35,6 +38,57 @@ const closeWinnerPopupBtn = document.getElementById("closeWinnerPopup");
 
 // Win rule toggle
 const winRuleToggle = document.getElementById("winRuleToggle");
+
+// --- Session Storage ---
+function saveState() {
+  if (!gameActive) return;
+  const state = {
+    players,
+    currentPlayerIndex,
+    dartsThrown,
+    instantWinMode,
+    selectedMultiplier,
+    turnHistory,
+  };
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function clearSavedState() {
+  sessionStorage.removeItem(STORAGE_KEY);
+}
+
+function restoreState() {
+  const saved = sessionStorage.getItem(STORAGE_KEY);
+  if (!saved) return false;
+
+  try {
+    const state = JSON.parse(saved);
+    players = state.players;
+    currentPlayerIndex = state.currentPlayerIndex;
+    dartsThrown = state.dartsThrown;
+    instantWinMode = state.instantWinMode;
+    selectedMultiplier = state.selectedMultiplier;
+    turnHistory = state.turnHistory || [];
+    gameActive = true;
+
+    // Hide setup, show game
+    startGameBtn.style.display = "none";
+    playerCountSlider.style.display = "none";
+    playerCountDisplay.style.display = "none";
+    playerCountLabel.style.display = "none";
+    winRuleToggle.parentElement.style.display = "none";
+    document.getElementById("nameInputs").style.display = "none";
+
+    // Hide the rules overlay on restore
+    document.getElementById("rulesOverlay").classList.add("hidden");
+
+    startGame();
+    return true;
+  } catch (e) {
+    clearSavedState();
+    return false;
+  }
+}
 
 // Event Listeners
 playerCountSlider.addEventListener("input", () => {
@@ -87,7 +141,9 @@ startGameBtn.addEventListener("click", () => {
   currentPlayerIndex = 0;
   dartsThrown = 0;
   turnHistory = [];
+  gameActive = true;
   startGame();
+  saveState();
 });
 
 endGameBtn.addEventListener("click", () => {
@@ -114,6 +170,7 @@ nextPlayerContinueBtn.addEventListener("click", () => {
   updateControlsState(false);
   updateScoreboard();
   updateTurnDisplay();
+  saveState();
 });
 
 closeWinnerPopupBtn.addEventListener("click", () => {
@@ -128,7 +185,6 @@ function startGame() {
   currentTurnDisplay.classList.remove("hidden");
   endGameBtn.classList.remove("hidden");
 
-  selectedMultiplier = 1;
   updateScoreboard();
   renderNumberButtons();
   renderMultiplierButtons();
@@ -212,6 +268,7 @@ function recordMiss() {
   dartsThrown++;
   updateTurnDisplay();
   updateScoreboard();
+  saveState();
 
   if (dartsThrown >= dartsPerTurn) {
     updateControlsState(true);
@@ -271,6 +328,7 @@ function markHit(number) {
   dartsThrown++;
   updateScoreboard();
   updateTurnDisplay();
+  saveState();
 
   if (checkForWinner()) {
     updateControlsState(true);
@@ -298,6 +356,7 @@ function undoLastDart() {
   updateScoreboard();
   updateTurnDisplay();
   updateControlsState(false);
+  saveState();
 
   // Hide next player popup if it was showing
   nextPlayerPopup.classList.add("hidden");
@@ -400,6 +459,8 @@ function resetGame() {
   dartsThrown = 0;
   turnHistory = [];
   selectedMultiplier = 1;
+  gameActive = false;
+  clearSavedState();
 
   scoreboard.classList.add("hidden");
   controls.classList.add("hidden");
@@ -430,11 +491,13 @@ function checkForWinner() {
   if (!allClosed) return false;
 
   if (instantWinMode) {
+    clearSavedState();
     showWinnerPopup(player.name);
     return true;
   } else {
     const maxScore = Math.max(...players.map((p) => p.score));
     if (player.score < maxScore) return false;
+    clearSavedState();
     showWinnerPopup(player.name);
     return true;
   }
@@ -447,4 +510,26 @@ function showWinnerPopup(name) {
 
 function goHome() {
   window.location.href = "../../index.html";
+}
+
+// Rules overlay
+const RULES_SEEN_KEY = "cricket_rules_seen";
+
+document.getElementById("closeRulesBtn").addEventListener("click", () => {
+  document.getElementById("rulesOverlay").classList.add("hidden");
+  sessionStorage.setItem(RULES_SEEN_KEY, "true");
+});
+
+document.getElementById("howToPlayBtn").addEventListener("click", () => {
+  document.getElementById("rulesOverlay").classList.remove("hidden");
+});
+
+// Hide rules if already dismissed this session
+if (sessionStorage.getItem(RULES_SEEN_KEY)) {
+  document.getElementById("rulesOverlay").classList.add("hidden");
+}
+
+// Restore saved game or show fresh setup
+if (!restoreState()) {
+  renderNameInputs(playerCountSlider.value);
 }

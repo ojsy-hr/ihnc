@@ -205,7 +205,8 @@ button:disabled {
   justify-content: center;
   gap: 0;
   margin-top: 2rem;
-  overflow-x: auto;
+  overflow: visible;
+  padding: 1rem 0;
 }
 
 .score-labels {
@@ -252,8 +253,8 @@ button:disabled {
   min-width: 120px;
   max-width: 250px;
   margin: 0 0.4rem;
-  border: 2px solid transparent;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid #333;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .score-column h3 {
@@ -407,6 +408,70 @@ button:disabled {
 
 .overlay-content p {
   color: #ccc;
+}
+
+/* How to Play button */
+.how-to-play-btn {
+  background: none;
+  border: 2px solid #d43e3e;
+  color: #d43e3e;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-bottom: 10px;
+}
+.how-to-play-btn:hover {
+  background-color: #d43e3e;
+  color: #fff;
+}
+
+/* Rules overlay */
+.rules-content {
+  max-width: 500px;
+  text-align: left;
+  padding: 2rem 2.5rem;
+}
+.rules-content h2 {
+  text-align: center;
+  color: #61dafb;
+  margin-bottom: 0.2rem;
+}
+.rules-subtitle {
+  text-align: center;
+  color: #61dafb;
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin-bottom: 1.2rem;
+  opacity: 0.7;
+}
+.rules-section {
+  margin-bottom: 1.2rem;
+}
+.rules-section h3 {
+  color: #61dafb;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+.rules-section p {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.rules-section ul {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0.3rem 0 0 0;
+  padding-left: 1.2rem;
+}
+.rules-content > button {
+  display: block;
+  margin: 1.5rem auto 0;
+  padding: 10px 30px;
 }
 
 .hidden {

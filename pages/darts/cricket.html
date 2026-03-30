@@ -20,7 +20,6 @@
         </button>
 
         <div class="nav-links">
-          <a href="../how-it-works.html">How It Works</a>
           <a href="../about.html">About</a>
           <a href="../feedback.html">Feedback</a>
         </div>
@@ -29,6 +28,7 @@
 
     <div class="container">
       <h1>Cricket 🎯</h1>
+      <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
 
       <div class="player-settings">
         <button id="startGame">Start Game</button>
@@ -90,6 +90,42 @@
           <p id="winnerName"></p>
           <button id="closeWinnerPopup">Close</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay">
+      <div class="overlay-content rules-content">
+        <h2>Cricket</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>The Game</h3>
+          <p>Players take turns throwing 3 darts. The targets are <strong>20, 19, 18, 17, 16, 15</strong> and <strong>Bull</strong>. Close all numbers and have the highest score to win.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Closing Numbers</h3>
+          <ul>
+            <li>Hit a number <strong>3 times</strong> to close it</li>
+            <li>A <strong>Single</strong> = 1 mark, <strong>Double</strong> = 2 marks, <strong>Triple</strong> = 3 marks</li>
+            <li>Bull: outer ring = Single (25 pts), inner ring = Double (50 pts)</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Scoring</h3>
+          <ul>
+            <li>Once you close a number, extra hits <strong>score points</strong> until all opponents close it too</li>
+            <li>Points are the face value of the number times the multiplier</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Playing</h3>
+          <ul>
+            <li>Select <strong>Single / Double / Triple</strong> then tap the number you hit</li>
+            <li><strong>Miss</strong> wastes a dart, <strong>Undo</strong> takes back your last dart</li>
+            <li>After 3 darts, pass to the next player</li>
+          </ul>
+        </div>
+        <button id="closeRulesBtn">Got it</button>
       </div>
     </div>
 

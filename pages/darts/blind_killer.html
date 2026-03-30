@@ -20,7 +20,6 @@
         </button>
 
         <div class="nav-links">
-          <a href="../how-it-works.html">How It Works</a>
           <a href="../about.html">About</a>
           <a href="../feedback.html">Feedback</a>
         </div>
@@ -29,6 +28,9 @@
 
     <div class="container">
       <h1>Blind Killer 🎯</h1>
+      <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+
+      <div id="spacing-small"></div>
 
       <label class="switch">
         <input type="checkbox" id="soundToggle" checked />
@@ -106,6 +108,36 @@
             <button id="confirmNo">No</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay">
+      <div class="overlay-content rules-content">
+        <h2>Blind Killer</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>The Game</h3>
+          <p>Each player draws a card from the deck — but keeps it secret. Every card starts with 3 lives. The last card alive wins.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Setup</h3>
+          <ul>
+            <li>Set the <strong>card range</strong> (how many cards in the deck)</li>
+            <li>Set the <strong>number of players</strong></li>
+            <li>Each player taps <strong>Draw Card</strong> to get their secret card (it disappears after 3 seconds)</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Playing</h3>
+          <ul>
+            <li>Once all cards are drawn, tap <strong>Reveal All Cards</strong></li>
+            <li>When a player's number is hit on the dartboard, tap their card to <strong>take a life</strong></li>
+            <li>A card with 0 lives is eliminated</li>
+            <li>Last card standing wins!</li>
+          </ul>
+        </div>
+        <button id="closeRulesBtn">Got it</button>
       </div>
     </div>
 
