@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pontoon — ihavenocards</title>
+    <meta name="description" content="Play Pontoon online free — Britain's version of Blackjack. Twist, buy, or stick. Five Card Trick beats everything. No download needed." />
+    <meta property="og:title" content="Pontoon — ihavenocards" />
+    <meta property="og:description" content="Free Pontoon — British Blackjack. Twist, buy, or stick to 21." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/cards/pontoon/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../cards/">Card Games</a><span class="sep">›</span>
+        <span class="current">Pontoon</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Pontoon 🂱</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-val" id="winsVal">0</div><div class="stat-label">Wins</div></div>
+        <div class="stat-box"><div class="stat-val" id="lossesVal">0</div><div class="stat-label">Losses</div></div>
+        <div class="stat-box"><div class="stat-val" id="pushVal">0</div><div class="stat-label">Pushes</div></div>
+      </div>
+
+      <div class="game-table">
+        <div class="hand-section">
+          <div class="hand-label">Banker</div>
+          <div class="hand" id="dealerHand"></div>
+          <div class="hand-score" id="dealerScore"></div>
+        </div>
+        <hr style="border-color:var(--border);margin:1.25rem 0">
+        <div class="hand-section">
+          <div class="hand-label">You</div>
+          <div class="hand" id="playerHand"></div>
+          <div class="hand-score" id="playerScore"></div>
+        </div>
+      </div>
+
+      <div id="resultMsg" class="feedback-msg hidden"></div>
+
+      <div class="action-buttons" id="gameActions">
+        <button class="btn btn-primary btn-lg" onclick="dealGame()">Deal</button>
+      </div>
+      <div class="action-buttons hidden" id="playActions">
+        <button class="btn btn-primary" onclick="playerTwist()">Twist</button>
+        <button class="btn btn-outline" onclick="playerStick()">Stick</button>
+        <button class="btn btn-ghost" id="buyBtn" onclick="playerBuy()">Buy</button>
+      </div>
+    </main>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Pontoon</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Goal</h3>
+          <p>Beat the Banker by getting closer to 21 without busting. A Pontoon (Ace + 10-value card) or Five Card Trick beats everything.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Card Values</h3>
+          <ul>
+            <li>2–10 = face value, J/Q/K = 10, Ace = 1 or 11</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Your Options</h3>
+          <ul>
+            <li><strong>Twist</strong> — take a card face up (always free)</li>
+            <li><strong>Stick</strong> — hold your hand (must have 15+)</li>
+            <li><strong>Buy</strong> — take a card face down (only before twisting, max 5 cards)</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Special Hands</h3>
+          <ul>
+            <li><strong>Pontoon</strong> — Ace + 10-value card on first two cards (best hand)</li>
+            <li><strong>Five Card Trick</strong> — 5 cards totalling 21 or less (second best)</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Banker Rules</h3>
+          <ul>
+            <li>Banker must keep hitting until reaching 17 or higher</li>
+            <li>On a tie, the Banker wins</li>
+          </ul>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/pontoon.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All Games — ihavenocards</title>
+    <meta name="description" content="Browse all free card games, darts scorers, pool games, and party games on ihavenocards. No download needed." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/games/" />
+    <link rel="stylesheet" href="../css/shared.css" />
+    <link rel="stylesheet" href="../css/games.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="/pages/about/">About</a>
+            <a href="/pages/feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <span class="current">All Games</span>
+      </nav>
+
+      <h1>All Games</h1>
+      <p class="page-intro">Every game on ihavenocards — filter by category or search.</p>
+
+      <div class="search-row">
+        <input type="search" id="searchInput" placeholder="Search games…" aria-label="Search games" />
+      </div>
+
+      <div class="category-filters" role="group" aria-label="Filter by category">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="cards">🃏 Card Games</button>
+        <button class="filter-btn" data-category="darts">🎯 Darts</button>
+        <button class="filter-btn" data-category="pool">🎱 Pool</button>
+        <button class="filter-btn" data-category="party">🔥 Party</button>
+      </div>
+
+      <div id="gameGrid" class="game-grid" role="list"></div>
+      <p id="noResults" class="no-results hidden">No games found. <a href="/pages/feedback/?type=game-suggestion">Suggest one →</a></p>
+    </main>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/games-data.js"></script>
+    <script>
+      document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+      let activeCategory = 'all';
+      let searchTerm = '';
+
+      function render() {
+        const games = getByCategory(activeCategory).filter(g =>
+          !searchTerm || g.name.toLowerCase().includes(searchTerm) || g.description.toLowerCase().includes(searchTerm)
+        );
+        const grid = document.getElementById('gameGrid');
+        const none = document.getElementById('noResults');
+        grid.innerHTML = games.map(g => buildGameCard(g, '')).join('');
+        none.classList.toggle('hidden', games.length > 0);
+      }
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeCategory = btn.dataset.category;
+          render();
+        });
+      });
+
+      document.getElementById('searchInput').addEventListener('input', e => {
+        searchTerm = e.target.value.toLowerCase().trim();
+        render();
+      });
+
+      render();
+    </script>
+    <script src="../js/analytics.js" defer></script>
+  </body>
+</html>

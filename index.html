@@ -1,68 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ihavenocards - Interactive Card Games for Darts & Pool</title>
+    <title>ihavenocards — Free Card Games & Pub Games on Your Phone</title>
+    <meta name="description" content="Forgot your cards? ihavenocards has free card games, darts scorers, and pub games playable on any phone — no download needed." />
+    <meta property="og:title" content="ihavenocards — Free Card Games & Pub Games" />
+    <meta property="og:description" content="Forgot your cards? Play Blackjack, Ring of Fire, Blind Killer and more — free, on any phone." />
+    <meta property="og:image" content="/ihavenocardscom-qr-flyer.png" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/" />
+    <link rel="stylesheet" href="css/shared.css" />
     <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
     <nav>
       <a href="/" class="logo">ihavenocards</a>
-
-      <div class="nav-menu-wrapper">
-        <button
-          class="nav-toggle"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          ☰
-        </button>
-
-        <div class="nav-links">
-          <a href="pages/about/">About</a>
-          <a href="pages/feedback/">Feedback</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="/pages/about/">About</a>
+            <a href="/pages/feedback/">Feedback</a>
+          </div>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
       </div>
     </nav>
 
     <div class="cards-background" aria-hidden="true">
       <div class="cards-track-wrapper">
-        <div class="cards-track">
-          🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪 🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮
-        </div>
-        <div class="cards-track">
-          🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪 🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮
-        </div>
+        <div class="cards-track">🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪 🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮</div>
+        <div class="cards-track">🂤 🂩 🂧 🂭 🂥 🂡 🂨 🂫 🂦 🂢 🂮 🂣 🂪 🂫 🂩 🂦 🂧 🂥 🂭 🂡 🂨 🂢 🂮 🂤 🂣 🂪 🂥 🂢 🂮 🂨 🂫 🂡 🂩 🂣 🂪 🂦 🂭 🂤 🂧 🂡 🂨 🂦 🂭 🂩 🂫 🂧 🂣 🂥 🂢 🂪 🂤 🂮</div>
       </div>
     </div>
 
     <main>
-      <div class="content-wrapper">
-        <h1>ihavenocards</h1>
-        <p>Forgot your cards, or just don't have any to hand? <br> Don't worry - we've got you covered.</p>
-        <div class="game-links" role="region" aria-label="Game Links">
-          <a
-            href="pages/darts/"
-            class="game-button"
-            aria-label="Play Darts Card Game"
-          >
-            🎯 Darts
-          </a>
-          <a
-            href="pages/pool/"
-            class="game-button"
-            aria-label="Play Pool Card Game"
-          >
-            🎱 Pool
-          </a>
+      <div class="hero-content">
+        <h1>Forgot your cards?<br><span>We've got you.</span></h1>
+        <p>Free card games, darts scorers &amp; pub games — playable on any phone.</p>
+        <div class="hero-actions">
+          <a href="/games/" class="btn btn-primary btn-lg">Browse All Games</a>
+          <button id="randomGameBtn" class="btn btn-outline btn-lg">🎲 Random Game</button>
         </div>
+        <button id="installBtn" class="btn btn-ghost btn-sm hidden" style="margin-top:0.75rem">📲 Add to Home Screen</button>
       </div>
+
+      <section class="games-section">
+        <div class="category-filters" role="group" aria-label="Filter games by category">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="cards">🃏 Card Games</button>
+          <button class="filter-btn" data-category="darts">🎯 Darts</button>
+          <button class="filter-btn" data-category="pool">🎱 Pool</button>
+          <button class="filter-btn" data-category="party">🔥 Party</button>
+        </div>
+        <div id="gameGrid" class="game-grid" role="list" aria-label="Available games"></div>
+      </section>
+
+      <section id="recentSection" class="recent-section hidden">
+        <h2 class="section-label">Recently Played</h2>
+        <div id="recentGrid" class="game-grid small-grid"></div>
+      </section>
     </main>
 
-    <footer>&copy; 2025 ihavenocards. All rights reserved.</footer>
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
 
-    <script src="js/nav-button.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/games-data.js"></script>
+    <script src="js/index.js"></script>
     <script src="js/analytics.js" defer></script>
   </body>
 </html>

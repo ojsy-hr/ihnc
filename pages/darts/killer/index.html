@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Killer Darts — ihavenocards</title>
+    <meta name="description" content="Free Killer darts game — pick your number, hit it 3 times to become a killer, then eliminate the other players. Last one standing wins." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/darts/killer/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/darts-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../darts/">Darts</a><span class="sep">›</span>
+        <span class="current">Killer</span>
+      </nav>
+
+      <h1>Killer 🎯</h1>
+      <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+
+      <!-- Setup -->
+      <div id="setupSection" style="margin-top:1.5rem">
+        <p style="color:var(--text-muted);margin-bottom:1rem">Each player picks a number (1–20) as their own. Hit it 3 times to become a Killer, then take out the others!</p>
+        <label style="color:var(--text-muted)">Players:
+          <input type="range" id="playerCount" min="2" max="6" value="2" oninput="updateSetup()" style="margin:0.5rem 1rem 0;width:140px">
+          <span id="playerCountDisplay">2</span>
+        </label>
+        <div id="nameInputs" style="margin-top:1rem"></div>
+        <button class="btn btn-primary btn-lg mt-2" onclick="startGame()">Start Game</button>
+      </div>
+
+      <!-- Game -->
+      <div id="gameSection" class="hidden">
+        <div class="darts-info-row">
+          <div class="darts-info-box">
+            <div class="darts-info-val" id="currentTurnDisplay">-</div>
+            <div class="darts-info-label">Current player</div>
+          </div>
+          <div class="darts-info-box">
+            <div class="darts-info-val" id="phaseDisplay">Qualifying</div>
+            <div class="darts-info-label">Phase</div>
+          </div>
+        </div>
+
+        <div id="scoreboard" class="darts-scoreboard"></div>
+
+        <div class="darts-controls" id="throwControls">
+          <p id="throwInstruction" style="color:var(--text-muted);font-size:0.95rem;margin-bottom:0.75rem"></p>
+          <div class="darts-action-row">
+            <button class="btn btn-primary" onclick="recordHit()">Hit! ✅</button>
+            <button class="btn btn-ghost" onclick="recordMiss()">Miss ✗</button>
+          </div>
+          <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.75rem">3 darts per turn. Record each dart.</p>
+          <div id="dartsRow" class="turn-darts" style="margin-top:0.5rem"></div>
+          <button id="endTurnBtn" class="btn btn-outline mt-2 hidden" onclick="endTurn()">End Turn ➡</button>
+        </div>
+
+        <div style="margin-top:1.25rem">
+          <button class="btn btn-ghost btn-sm" onclick="confirmReset()">Reset Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Winner -->
+    <div id="winnerOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2 id="winnerMsg"></h2>
+        <button class="btn btn-primary mt-1" onclick="closeOverlay('winnerOverlay'); location.reload()">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Rules -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Killer</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Setup</h3>
+          <p>Each player picks a unique number (1–20) as their own. Players take turns throwing 3 darts per turn.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Phase 1 — Qualifying</h3>
+          <ul>
+            <li>Hit your own number 3 times (with any combination of singles, doubles, and triples) to become a <strong>Killer</strong></li>
+            <li>Until you qualify, you can't eliminate others</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Phase 2 — Killing</h3>
+          <ul>
+            <li>Once a Killer, hitting another player's number takes a life from them</li>
+            <li>Each player starts with 3 lives</li>
+            <li>0 lives = eliminated</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Winning</h3>
+          <p>Last player with at least 1 life wins!</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>&copy; <span id="footerYear"></span> ihavenocards. All rights reserved.</footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/killer.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

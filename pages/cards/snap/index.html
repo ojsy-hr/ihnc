@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Snap — ihavenocards</title>
+    <meta name="description" content="Play Snap online free — two players, one device. Flip cards and shout Snap when they match. Pass-and-play." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/cards/snap/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <!-- Cover screen between turns -->
+    <div id="coverScreen" class="cover-screen">
+      <h2 id="coverTitle">Pass the phone</h2>
+      <p id="coverMsg">Pass to your opponent, then tap Ready.</p>
+      <button class="btn btn-primary btn-lg" id="coverReadyBtn">Ready 👁️</button>
+    </div>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../cards/">Card Games</a><span class="sep">›</span>
+        <span class="current">Snap</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Snap 👏</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <div id="setupSection">
+        <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem">Two players, one device. Flip your top card — shout SNAP when two match!</p>
+        <div style="display:flex;gap:1rem;flex-direction:column;max-width:280px;margin:0 auto">
+          <input type="text" id="p1Name" placeholder="Player 1 name" style="padding:0.6rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:1rem;font-family:inherit" />
+          <input type="text" id="p2Name" placeholder="Player 2 name" style="padding:0.6rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:1rem;font-family:inherit" />
+          <button class="btn btn-primary btn-lg" onclick="startSnap()">Start Game</button>
+        </div>
+      </div>
+
+      <div id="gameSection" class="hidden">
+        <div class="snap-stage">
+          <div class="snap-pile">
+            <div class="snap-pile-label" id="p1Label">Player 1</div>
+            <div id="p1CardSlot"></div>
+            <div class="snap-pile-count" id="p1Count">26 cards</div>
+          </div>
+          <div class="snap-pile">
+            <div class="snap-pile-label">Centre</div>
+            <div id="centreSlot" style="min-width:80px;min-height:112px;display:flex;align-items:center;justify-content:center"></div>
+            <div class="snap-pile-count" id="centreCount">0 cards</div>
+          </div>
+          <div class="snap-pile">
+            <div class="snap-pile-label" id="p2Label">Player 2</div>
+            <div id="p2CardSlot"></div>
+            <div class="snap-pile-count" id="p2Count">26 cards</div>
+          </div>
+        </div>
+
+        <div id="turnInfo" class="feedback-msg info" style="text-align:center;margin-bottom:1rem"></div>
+
+        <button id="flipBtn" class="btn btn-primary btn-lg" style="display:block;margin:0 auto 1rem" onclick="flipCard()">Flip Card</button>
+
+        <button id="snapBtn" class="snap-btn inactive" onclick="callSnap()">SNAP!</button>
+
+        <button class="btn btn-ghost mt-3" style="display:block;margin:0 auto" onclick="setupNewGame()">New Game</button>
+      </div>
+    </main>
+
+    <!-- Winner overlay -->
+    <div id="winnerOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2>🏆 Winner!</h2>
+        <p id="snapWinnerMsg"></p>
+        <button class="btn btn-outline" onclick="shareResult(document.getElementById('snapWinnerMsg').textContent + ' — Snap on ihavenocards.com')">📤 Share</button>
+        <button class="btn btn-primary mt-1" onclick="closeOverlay('winnerOverlay'); setupNewGame()">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Snap</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Setup</h3>
+          <p>The 52-card deck is split equally between two players (26 each). A cover screen hides the cards when passing the phone.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Playing</h3>
+          <ul>
+            <li>On your turn, tap <strong>Flip Card</strong> to turn over your top card into the centre pile</li>
+            <li>Pass the phone to the other player</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Snap!</h3>
+          <ul>
+            <li>When the flipped card matches the previous card (same rank), both players race to tap <strong>SNAP!</strong></li>
+            <li>First to tap SNAP wins all the cards in the centre pile</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Winning</h3>
+          <p>The player who runs out of cards loses. The player with all the cards wins.</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/snap.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

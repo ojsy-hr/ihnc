@@ -1,0 +1,200 @@
+/* Darts game pages — shared layout */
+
+body { text-align: center; }
+
+h1 {
+  font-size: 2.2rem;
+  color: var(--accent);
+  margin-top: 1.25rem;
+}
+
+.container {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 1.75rem 2rem;
+  background: var(--surface);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* ── Info row (target / darts / player) ── */
+.darts-info-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.darts-info-box {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.darts-info-val {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.darts-info-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ── Turn darts tracker ── */
+.turn-darts {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.dart-thrown {
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.dart-thrown.hit  { background: rgba(27,138,73,0.2); color: #4caf7d; border-color: var(--success); }
+.dart-thrown.miss { background: rgba(212,62,62,0.1); color: var(--danger); border-color: var(--danger); }
+.dart-thrown.pending { background: var(--surface-raised); color: var(--text-dim); border-style: dashed; }
+
+/* ── Scoreboard ── */
+.darts-scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.darts-player-col {
+  background: var(--surface-raised);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  min-width: 100px;
+  max-width: 160px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.darts-player-col.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(97,218,251,0.2);
+}
+
+.darts-player-col h3 {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.darts-player-score {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.darts-player-detail {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ── Controls ── */
+.darts-controls { margin-top: 1rem; }
+
+.multiplier-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.multiplier-row button {
+  min-width: 70px;
+  background: var(--surface-raised);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.multiplier-row button:hover { color: var(--text); border-color: var(--text-muted); }
+.multiplier-row button.active {
+  background: var(--surface-raised);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 6px rgba(97,218,251,0.3);
+}
+
+.darts-action-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* Setup inputs */
+#nameInputs input {
+  display: block;
+  margin: 0.4rem auto;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  width: 220px;
+  user-select: text;
+}
+#nameInputs input::placeholder { color: var(--text-dim); }
+#nameInputs input:focus { border-color: var(--accent); outline: none; }
+
+/* Killer game — lives dots */
+.killer-lives {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 4px;
+}
+.life-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--danger);
+  transition: background var(--transition);
+}
+.life-dot.lost { background: var(--border); }
+
+@media (max-width: 1300px) { .container { margin: 1rem; padding: 1.25rem; } }
+@media (max-width: 480px) {
+  h1 { font-size: 1.8rem; }
+  .darts-info-box { padding: 0.5rem 0.75rem; min-width: 65px; }
+  .darts-info-val { font-size: 1.4rem; }
+  .container { padding: 1rem; margin: 0.5rem; }
+}

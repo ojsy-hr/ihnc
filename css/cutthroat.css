@@ -1,0 +1,190 @@
+/* Cutthroat Pool */
+
+.ct-main {
+  max-width: 860px;
+  margin: 1.5rem auto;
+  padding: 1.75rem 2rem;
+}
+
+/* Setup */
+.ct-setup {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.ct-player-setup {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  min-width: 180px;
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ct-player-setup label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.ct-player-setup input,
+.ct-player-setup select {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ct-player-setup input:focus,
+.ct-player-setup select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Player cards during game */
+.ct-player-cards {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.ct-player-card {
+  background: var(--surface-raised);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  min-width: 130px;
+  max-width: 180px;
+  flex: 1;
+  text-align: center;
+  transition: border-color var(--transition), opacity var(--transition);
+}
+
+.ct-player-card.alive {
+  border-color: var(--success);
+}
+
+.ct-player-card.eliminated {
+  opacity: 0.45;
+  border-color: var(--danger);
+}
+
+.ct-player-card h3 {
+  font-size: 0.95rem;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ct-player-balls-remaining {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.ct-player-group {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ct-player-status {
+  font-size: 0.8rem;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.ct-player-card.alive .ct-player-status { color: var(--success); }
+.ct-player-card.eliminated .ct-player-status { color: var(--danger); }
+
+/* Ball grid */
+.ct-balls-section {
+  margin: 1.5rem 0;
+}
+
+.ct-ball-grid {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.ct-ball {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.2s, box-shadow 0.15s;
+  user-select: none;
+  position: relative;
+}
+
+.ct-ball:hover:not(.potted) {
+  transform: scale(1.12);
+  box-shadow: 0 0 10px rgba(255,255,255,0.25);
+}
+
+.ct-ball:active:not(.potted) {
+  transform: scale(0.96);
+}
+
+/* Group colours */
+.ct-ball.group-1 { background: #e8b800; color: #222; border-color: #c99c00; }
+.ct-ball.group-2 { background: #d43e3e; color: #fff; border-color: #a82e2e; }
+.ct-ball.group-3 { background: #1a5fd4; color: #fff; border-color: #1247a8; }
+
+.ct-ball.potted {
+  opacity: 0.25;
+  cursor: default;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.ct-ball .ball-num { pointer-events: none; }
+
+/* Legend dots in player cards */
+.ct-group-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.ct-group-dot.g1 { background: #e8b800; }
+.ct-group-dot.g2 { background: #d43e3e; }
+.ct-group-dot.g3 { background: #1a5fd4; }
+
+@media (max-width: 480px) {
+  .ct-main { padding: 1rem; margin: 0.5rem; }
+  .ct-ball { width: 44px; height: 44px; font-size: 0.8rem; }
+  .ct-player-setup { min-width: 150px; }
+}

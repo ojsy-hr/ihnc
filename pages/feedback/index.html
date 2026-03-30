@@ -1,57 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Feedback - ihavenocards</title>
+    <title>Feedback — ihavenocards</title>
+    <meta name="description" content="Send feedback, report a bug, or suggest a new game for ihavenocards." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/feedback/" />
+    <link rel="stylesheet" href="../../css/shared.css" />
     <link rel="stylesheet" href="../../css/feedback.css" />
   </head>
   <body>
     <nav>
-      <a href="../../" class="logo">ihavenocards</a>
-
-      <div class="nav-menu-wrapper">
-        <button
-          class="nav-toggle"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          ☰
-        </button>
-
-        <div class="nav-links">
-          <a href="../about/">About</a>
-          <a href="../feedback/">Feedback</a>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../about/">About</a>
+            <a href="../feedback/">Feedback</a>
+          </div>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
       </div>
     </nav>
 
     <main>
-      <h1>Send Feedback</h1>
-      <p class="intro">Spotted a bug? Got an idea? We'd love to hear it.</p>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Feedback</span>
+      </nav>
 
-      <form
-        action="https://formspree.io/f/xyzpyybl"
-        method="POST"
-        class="feedback-form"
-      >
+      <h1>Send Feedback</h1>
+      <p class="intro">Spotted a bug? Got a game idea? Want something changed? We'd love to hear it.</p>
+
+      <form action="https://formspree.io/f/xyzpyybl" method="POST" class="feedback-form">
         <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required />
+        <input type="text" id="name" name="name" placeholder="e.g. Dave" required />
 
         <label for="email">Your Email</label>
-        <input type="email" id="email" name="_replyto" required />
+        <input type="email" id="email" name="_replyto" placeholder="e.g. dave@example.com" required />
+
+        <label for="type">Type of Feedback</label>
+        <select id="type" name="type" required>
+          <option value="" disabled selected>Select a type…</option>
+          <option value="game-suggestion">🎮 Game suggestion</option>
+          <option value="bug-report">🐛 Bug report</option>
+          <option value="feature-request">💡 Feature request</option>
+          <option value="other">💬 Other</option>
+        </select>
 
         <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" maxlength="300" required oninput="updateCharCount()"></textarea>
+        <textarea id="message" name="message" rows="6" maxlength="300" required oninput="updateCharCount()" placeholder="Tell us more…"></textarea>
         <small id="charCount">0 / 300</small>
 
-        <button type="submit">Send Feedback</button>
+        <button type="submit" class="btn btn-primary">Send Feedback</button>
       </form>
     </main>
 
-    <footer>&copy; 2025 ihavenocards. All rights reserved.</footer>
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
 
-    <script src="../../js/nav-button.js"></script>
+    <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+    <script src="../../js/shared.js"></script>
     <script src="../../js/feedback-char-count.js"></script>
     <script src="../../js/analytics.js" defer></script>
   </body>

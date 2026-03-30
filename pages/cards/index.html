@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Card Games — ihavenocards</title>
+    <meta name="description" content="Free card games playable on your phone — Blackjack, Higher or Lower, Pontoon, Snap and more. No download needed." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/cards/" />
+    <link rel="stylesheet" href="../../css/shared.css" />
+    <link rel="stylesheet" href="../../css/hub.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../about/">About</a>
+            <a href="../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Card Games</span>
+      </nav>
+
+      <h1>🃏 Card Games</h1>
+      <p>Classic card games playable on any phone — no deck needed.</p>
+
+      <div class="game-grid" role="list">
+        <a href="higher-lower/" class="game-card">
+          <div class="game-card-emoji">🃏</div>
+          <div class="game-card-name">Higher or Lower</div>
+          <div class="game-card-desc">Guess if the next card is higher or lower. How long can your streak go?</div>
+          <div class="game-card-meta"><span class="badge">👥 1+</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="blackjack/" class="game-card">
+          <div class="game-card-emoji">🂡</div>
+          <div class="game-card-name">Blackjack</div>
+          <div class="game-card-desc">Beat the dealer to 21. Hit, stand, or go bust in the classic casino card game.</div>
+          <div class="game-card-meta"><span class="badge">👥 1</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="pontoon/" class="game-card">
+          <div class="game-card-emoji">🂱</div>
+          <div class="game-card-name">Pontoon</div>
+          <div class="game-card-desc">Britain's twist on Blackjack. Twist, buy, or stick your way to 21.</div>
+          <div class="game-card-meta"><span class="badge">👥 1</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="snap/" class="game-card">
+          <div class="game-card-emoji">👏</div>
+          <div class="game-card-name">Snap</div>
+          <div class="game-card-desc">Flip cards and be the first to shout Snap when two match! Pass-and-play for two.</div>
+          <div class="game-card-meta"><span class="badge">👥 2</span><span class="badge badge-new">New</span></div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+    <script src="../../js/shared.js"></script>
+    <script src="../../js/analytics.js" defer></script>
+  </body>
+</html>
