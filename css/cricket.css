@@ -436,8 +436,29 @@ button:disabled {
 /* Rules overlay */
 .rules-content {
   max-width: 500px;
+  width: 100%;
   text-align: left;
   padding: 2rem 2.5rem;
+}
+
+@media (max-width: 480px) {
+  .rules-content {
+    padding: 1.2rem 1rem;
+    max-width: 100%;
+  }
+  .rules-content h2 {
+    font-size: 1.4rem;
+  }
+  .rules-subtitle {
+    font-size: 0.95rem;
+  }
+  .rules-section h3 {
+    font-size: 0.9rem;
+  }
+  .rules-section p,
+  .rules-section ul {
+    font-size: 0.85rem;
+  }
 }
 .rules-content h2 {
   text-align: center;

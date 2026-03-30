@@ -513,7 +513,7 @@ function showWinnerPopup(name) {
 }
 
 function goHome() {
-  window.location.href = "../../index.html";
+  window.location.href = "../../../";
 }
 
 // Rules overlay
