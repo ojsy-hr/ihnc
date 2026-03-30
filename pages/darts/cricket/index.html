@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cricket 🎯</title>
+    <title>Cricket Darts Scorer — ihavenocards</title>
+    <meta name="description" content="Free Cricket darts scorer for 1–4 players. Close 20 down to 15 and Bull, score points, and win. No download needed." />
+    <meta property="og:title" content="Cricket Darts Scorer — ihavenocards" />
+    <meta property="og:description" content="Free Cricket darts scorer — close numbers, score points, and win. Works on any phone." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/darts/cricket/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
     <link rel="stylesheet" href="../../../css/cricket.css" />
   </head>
   <body>
     <nav>
-      <a href="../../../" class="logo">ihavenocards</a>
-
-      <div class="nav-menu-wrapper">
-        <button
-          class="nav-toggle"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          ☰
-        </button>
-
-        <div class="nav-links">
-          <a href="../../about/">About</a>
-          <a href="../../feedback/">Feedback</a>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
       </div>
     </nav>
 
     <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <a href="../../darts/">Darts</a>
+        <span class="sep">›</span>
+        <span class="current">Cricket</span>
+      </nav>
+
       <h1>Cricket 🎯</h1>
       <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
 
       <div class="player-settings">
         <button id="startGame">Start Game</button>
         <div class="toggle-rule">
-          <label for="winRuleToggle"
-            ><abbr
-              title="Enabling this allows a player to win immediately when all numbers are closed, regardless of score."
-              >Closeout Win:
-            </abbr></label
-          >
+          <label for="winRuleToggle">
+            <abbr title="Enabling this allows a player to win immediately when all numbers are closed, regardless of score.">Closeout Win:</abbr>
+          </label>
           <input type="checkbox" id="winRuleToggle" />
         </div>
 
         <div id="spacing"></div>
 
-        <label id="playerCountLabel" for="playerCount"
-          >Number of Players:</label
-        >
-
+        <label id="playerCountLabel" for="playerCount">Number of Players:</label>
         <input type="range" id="playerCount" min="1" max="4" value="2" />
         <span id="playerCountDisplay">2</span>
 
@@ -55,7 +61,6 @@
       </div>
 
       <div id="nameInputs"></div>
-
       <div id="currentTurn" class="hidden"></div>
       <div id="scoreboard" class="hidden"></div>
 
@@ -64,12 +69,12 @@
         <div id="numberButtons"></div>
       </div>
 
-      <!-- End Game Confirmation Popup -->
+      <!-- End Game Confirmation -->
       <div id="endGamePopup" class="overlay hidden">
         <div class="overlay-content">
           <h3>End Game?</h3>
           <p>This will reset everything and start over.</p>
-          <button id="confirmEndGame" style="margin-right: 1rem">Yes</button>
+          <button id="confirmEndGame" style="margin-right:1rem">Yes</button>
           <button id="cancelEndGame">Cancel</button>
         </div>
       </div>
@@ -88,13 +93,14 @@
         <div class="overlay-content">
           <h3>Game Over!</h3>
           <p id="winnerName"></p>
-          <button id="closeWinnerPopup">Close</button>
+          <button id="shareWinBtn" class="btn btn-outline mb-2">📤 Share Result</button>
+          <button id="closeWinnerPopup">Play Again</button>
         </div>
       </div>
     </div>
 
     <!-- Rules Overlay -->
-    <div id="rulesOverlay" class="overlay">
+    <div id="rulesOverlay" class="overlay hidden">
       <div class="overlay-content rules-content">
         <h2>Cricket</h2>
         <h3 class="rules-subtitle">How to Play</h3>
@@ -125,12 +131,24 @@
             <li>After 3 darts, pass to the next player</li>
           </ul>
         </div>
-        <button id="closeRulesBtn">Got it</button>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
       </div>
     </div>
 
+    <script src="../../../js/shared.js" defer></script>
     <script src="../../../js/cricket.js" defer></script>
-    <script src="../../../js/nav-button.js" defer></script>
     <script src="../../../js/analytics.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof trackGame === 'function') trackGame('cricket');
+        const shareBtn = document.getElementById('shareWinBtn');
+        if (shareBtn) {
+          shareBtn.addEventListener('click', () => {
+            const winner = document.getElementById('winnerName').textContent;
+            shareResult('🎯 ' + winner + ' — Cricket on ihavenocards.com');
+          });
+        }
+      });
+    </script>
   </body>
 </html>

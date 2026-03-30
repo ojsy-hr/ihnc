@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blackjack — ihavenocards</title>
+    <meta name="description" content="Play Blackjack online free — beat the dealer to 21. Hit, stand, double down. No download, works on any phone." />
+    <meta property="og:title" content="Blackjack — ihavenocards" />
+    <meta property="og:description" content="Free Blackjack — beat the dealer. No download, no sign-up." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/cards/blackjack/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../cards/">Card Games</a><span class="sep">›</span>
+        <span class="current">Blackjack</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Blackjack 🂡</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-val" id="winsVal">0</div><div class="stat-label">Wins</div></div>
+        <div class="stat-box"><div class="stat-val" id="lossesVal">0</div><div class="stat-label">Losses</div></div>
+        <div class="stat-box"><div class="stat-val" id="pushVal">0</div><div class="stat-label">Pushes</div></div>
+      </div>
+
+      <div class="game-table">
+        <div class="hand-section">
+          <div class="hand-label">Dealer</div>
+          <div class="hand" id="dealerHand"></div>
+          <div class="hand-score" id="dealerScore"></div>
+        </div>
+
+        <hr style="border-color:var(--border);margin:1.25rem 0">
+
+        <div class="hand-section">
+          <div class="hand-label">You</div>
+          <div class="hand" id="playerHand"></div>
+          <div class="hand-score" id="playerScore"></div>
+        </div>
+      </div>
+
+      <div id="resultMsg" class="feedback-msg hidden"></div>
+
+      <div class="action-buttons" id="gameActions">
+        <button id="dealBtn" class="btn btn-primary btn-lg" onclick="dealGame()">Deal</button>
+      </div>
+      <div class="action-buttons hidden" id="playActions">
+        <button class="btn btn-outline" onclick="playerHit()">Hit</button>
+        <button class="btn btn-primary" onclick="playerStand()">Stand</button>
+        <button class="btn btn-ghost" id="doubleBtn" onclick="playerDouble()">Double</button>
+      </div>
+    </main>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Blackjack</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Goal</h3>
+          <p>Beat the dealer by getting closer to 21 without going over ("busting").</p>
+        </div>
+        <div class="rules-section">
+          <h3>Card Values</h3>
+          <ul>
+            <li>2–10 = face value</li>
+            <li>J, Q, K = 10</li>
+            <li>Ace = 1 or 11 (whichever is better)</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Playing</h3>
+          <ul>
+            <li><strong>Hit</strong> — take another card</li>
+            <li><strong>Stand</strong> — keep your current hand</li>
+            <li><strong>Double</strong> — take exactly one more card</li>
+            <li>If you go over 21, you bust and lose</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Dealer Rules</h3>
+          <ul>
+            <li>Dealer must hit until they reach 17 or higher</li>
+            <li>Blackjack (Ace + 10-value card) beats everything except another Blackjack</li>
+          </ul>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/blackjack.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

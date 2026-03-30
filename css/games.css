@@ -1,0 +1,49 @@
+/* All games browse page */
+
+main {
+  flex-grow: 1;
+  padding: 2rem 1.5rem 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2.4rem;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+
+.page-intro {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0 0 1.5rem;
+}
+
+.search-row {
+  margin-bottom: 1rem;
+}
+
+.search-row input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color var(--transition);
+}
+.search-row input::placeholder { color: var(--text-dim); }
+.search-row input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.no-results {
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}

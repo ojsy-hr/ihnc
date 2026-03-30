@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shanghai Darts — ihavenocards</title>
+    <meta name="description" content="Free Shanghai darts scorer — target numbers 1–7 in order. Hit a Shanghai (single, double, and triple in one turn) to win instantly." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/darts/shanghai/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/darts-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../darts/">Darts</a><span class="sep">›</span>
+        <span class="current">Shanghai</span>
+      </nav>
+
+      <h1>Shanghai 🎯</h1>
+      <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+
+      <div id="setupSection" style="margin-top:1.5rem">
+        <label style="color:var(--text-muted)">Players:
+          <input type="range" id="playerCount" min="2" max="8" value="2" oninput="updateSetup()" style="margin:0.5rem 1rem 0;width:150px">
+          <span id="playerCountDisplay">2</span>
+        </label>
+        <div id="nameInputs" style="margin-top:1rem"></div>
+        <button class="btn btn-primary btn-lg mt-2" onclick="startGame()">Start Game</button>
+      </div>
+
+      <div id="gameSection" class="hidden">
+        <div class="darts-info-row">
+          <div class="darts-info-box">
+            <div class="darts-info-val" id="currentTarget">1</div>
+            <div class="darts-info-label">Target</div>
+          </div>
+          <div class="darts-info-box">
+            <div class="darts-info-val" id="dartsLeftDisplay">3</div>
+            <div class="darts-info-label">Darts left</div>
+          </div>
+          <div class="darts-info-box">
+            <div class="darts-info-val" id="currentTurnDisplay">-</div>
+            <div class="darts-info-label">Current player</div>
+          </div>
+        </div>
+
+        <div id="turnDarts" class="turn-darts"></div>
+
+        <div id="scoreboard" class="darts-scoreboard"></div>
+
+        <div class="darts-controls">
+          <div id="multiplierBtns" class="multiplier-row"></div>
+          <div class="darts-action-row">
+            <button class="btn btn-ghost" onclick="missThrow()">Miss</button>
+            <button class="btn btn-danger" onclick="undoThrow()">Undo</button>
+            <button id="confirmTurnBtn" class="btn btn-primary hidden" onclick="confirmTurn()">End Turn</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Winner overlay -->
+    <div id="winnerOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2 id="winnerMsg">🎯</h2>
+        <button class="btn btn-outline" id="shareWinBtn">📤 Share</button>
+        <button class="btn btn-primary mt-1" onclick="closeOverlay('winnerOverlay'); resetGame()">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Shanghai</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>The Game</h3>
+          <p>Players target numbers 1 through 7 in order. Each player throws 3 darts per round, scoring only on that round's target number. Highest total score after 7 rounds wins.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Scoring</h3>
+          <ul>
+            <li>Single = the target number's value</li>
+            <li>Double = 2× the value</li>
+            <li>Triple = 3× the value</li>
+            <li>Miss = 0</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Shanghai!</h3>
+          <p>If you hit a Single, Double, AND Triple of the target number all in one turn — you win instantly, regardless of score!</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>&copy; <span id="footerYear"></span> ihavenocards. All rights reserved.</footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/shanghai.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

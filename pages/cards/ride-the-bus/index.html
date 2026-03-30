@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ride the Bus — ihavenocards</title>
+    <meta name="description" content="Play Ride the Bus online free — guess colour, higher/lower, inside/outside, and suit. Get it wrong and take a sip. Classic drinking card game." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/cards/ride-the-bus/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../cards/">Card Games</a><span class="sep">›</span>
+        <span class="current">Ride the Bus</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Ride the Bus 🚌</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <div id="playerSetup">
+        <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem">Each player takes a turn guessing. Get all 4 right — pass. Get one wrong — take a sip and go again!</p>
+        <div style="max-width:260px;margin:0 auto;display:flex;flex-direction:column;gap:1rem">
+          <div id="playerNameInputs"></div>
+          <label style="color:var(--text-muted);font-size:0.9rem">Number of players:
+            <input type="range" id="numPlayers" min="1" max="8" value="2" oninput="updatePlayerInputs(this.value)" style="width:100%;margin-top:0.5rem">
+            <span id="numPlayersDisplay">2</span>
+          </label>
+          <button class="btn btn-primary" onclick="startGame()">Start Game</button>
+        </div>
+      </div>
+
+      <div id="gameSection" class="hidden">
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-val" id="currentPlayerName" style="font-size:1rem">-</div><div class="stat-label">Current Player</div></div>
+          <div class="stat-box"><div class="stat-val" id="roundNum">1</div><div class="stat-label">Round</div></div>
+          <div class="stat-box"><div class="stat-val" id="sipsVal">0</div><div class="stat-label">Sips</div></div>
+        </div>
+
+        <div class="rtb-card-display" id="cardRow"></div>
+
+        <div class="rtb-round-label" id="roundLabel"></div>
+        <div class="rtb-question" id="questionText"></div>
+
+        <div class="action-buttons" id="answerButtons"></div>
+
+        <div id="rtbFeedback" class="feedback-msg hidden"></div>
+      </div>
+    </main>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Ride the Bus</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Four Rounds</h3>
+          <p>Each player tries to answer all 4 questions correctly. Get one wrong — take a sip and start over from Round 1!</p>
+        </div>
+        <div class="rules-section">
+          <h3>Round 1 — Red or Black?</h3>
+          <p>Guess the colour (suit) of the next card.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Round 2 — Higher or Lower?</h3>
+          <p>Guess if the next card is higher or lower than Round 1's card. (Same = Lower loses)</p>
+        </div>
+        <div class="rules-section">
+          <h3>Round 3 — Inside or Outside?</h3>
+          <p>Guess if the next card's value falls between (Inside) or outside the values of your first two cards.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Round 4 — What Suit?</h3>
+          <p>Guess the exact suit (♠ ♥ ♦ ♣) of the next card.</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/ride_the_bus.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

@@ -1,32 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blind Killer</title>
+    <title>Blind Killer — ihavenocards</title>
+    <meta name="description" content="Blind Killer darts game — each player draws a secret card. When your card's number gets hit on the board, you lose a life. Last card standing wins." />
+    <meta property="og:title" content="Blind Killer — ihavenocards" />
+    <meta property="og:description" content="Draw a secret card. Last one standing wins. Free darts game on ihavenocards." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/darts/blind-killer/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
     <link rel="stylesheet" href="../../../css/blind_killer.css" />
   </head>
   <body>
     <nav>
-      <a href="../../../" class="logo">ihavenocards</a>
-
-      <div class="nav-menu-wrapper">
-        <button
-          class="nav-toggle"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          ☰
-        </button>
-
-        <div class="nav-links">
-          <a href="../../about/">About</a>
-          <a href="../../feedback/">Feedback</a>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
       </div>
     </nav>
 
     <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <a href="../../darts/">Darts</a>
+        <span class="sep">›</span>
+        <span class="current">Blind Killer</span>
+      </nav>
+
       <h1>Blind Killer 🎯</h1>
       <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
 
@@ -41,50 +53,29 @@
       <div id="spacing"></div>
 
       <div id="rangeControls" class="controls">
-        <label for="rangeSelect" id="rangeLabel"
-          >Showing cards from <strong>Ace (1)</strong> to
-          <strong>Ten</strong> of Spades</label
-        ><br />
-        <input
-          type="range"
-          id="rangeSelect"
-          min="5"
-          max="10"
-          value="10"
-          oninput="updateRange(this.value)"
-          onchange="resetDeck()"
-        />
+        <label for="rangeSelect" id="rangeLabel">Showing cards from <strong>Ace (1)</strong> to <strong>Ten</strong> of Spades</label><br />
+        <input type="range" id="rangeSelect" min="5" max="10" value="10" oninput="updateRange(this.value)" onchange="resetDeck()" />
       </div>
 
       <div id="playerControls" class="controls">
-        <label for="playerSelect" id="playerLabel"
-          >Number of players: <strong>1</strong></label
-        ><br />
-        <input
-          type="range"
-          id="playerSelect"
-          min="1"
-          max="10"
-          value="1"
-          oninput="updatePlayers(this.value)"
-        />
+        <label for="playerSelect" id="playerLabel">Number of players: <strong>1</strong></label><br />
+        <input type="range" id="playerSelect" min="1" max="10" value="1" oninput="updatePlayers(this.value)" />
       </div>
 
       <div class="controls">
         <button onclick="showRandomCard()">Draw Card</button>
-        <button id="revealListBtn" onclick="showCardList()">
-          Reveal All Cards
-        </button>
+        <button id="revealListBtn" onclick="showCardList()">Reveal All Cards</button>
         <button id="resetBtn" onclick="enableSlider()">Reset</button>
       </div>
 
       <div id="drawCount">Draws: 0</div>
-
       <div id="cardDisplay"></div>
 
+      <!-- Winner Overlay -->
       <div id="winnerOverlay" class="overlay hidden">
         <div class="overlay-content">
           <h2 id="winnerMessage">Ace of Spades is the winner!</h2>
+          <button id="shareResultBtn" class="btn btn-outline" style="margin-bottom:0.5rem">📤 Share Result</button>
           <button id="playAgainBtn">Play Again</button>
         </div>
       </div>
@@ -100,9 +91,7 @@
 
       <div id="confirmOverlay" class="overlay hidden">
         <div class="confirm-box">
-          <p id="confirmText">
-            Are you sure you want to take a life from this card?
-          </p>
+          <p id="confirmText">Are you sure you want to take a life from this card?</p>
           <div class="confirm-buttons">
             <button id="confirmYes">Yes</button>
             <button id="confirmNo">No</button>
@@ -112,7 +101,7 @@
     </div>
 
     <!-- Rules Overlay -->
-    <div id="rulesOverlay" class="overlay">
+    <div id="rulesOverlay" class="overlay hidden">
       <div class="overlay-content rules-content">
         <h2>Blind Killer</h2>
         <h3 class="rules-subtitle">How to Play</h3>
@@ -137,12 +126,21 @@
             <li>Last card standing wins!</li>
           </ul>
         </div>
-        <button id="closeRulesBtn">Got it</button>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
       </div>
     </div>
 
+    <script src="../../../js/shared.js" defer></script>
     <script src="../../../js/blind_killer.js" defer></script>
-    <script src="../../../js/nav-button.js" defer></script>
     <script src="../../../js/analytics.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof trackGame === 'function') trackGame('blind-killer');
+        document.getElementById('shareResultBtn').addEventListener('click', () => {
+          const msg = document.getElementById('winnerMessage').textContent;
+          shareResult('🎯 ' + msg + ' — Blind Killer on ihavenocards.com');
+        });
+      });
+    </script>
   </body>
 </html>

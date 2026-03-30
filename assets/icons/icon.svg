@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#121212"/>
+  <rect x="64" y="64" width="384" height="384" rx="40" fill="#1f1f1f" stroke="#61dafb" stroke-width="8"/>
+  <!-- Card suit symbols -->
+  <text x="256" y="310" font-family="Georgia, serif" font-size="200" font-weight="bold" fill="#61dafb" text-anchor="middle">i</text>
+  <!-- Decorative card suits -->
+  <text x="100" y="160" font-family="Georgia, serif" font-size="60" fill="#61dafb" opacity="0.4">♠</text>
+  <text x="360" y="160" font-family="Georgia, serif" font-size="60" fill="#d43e3e" opacity="0.4">♥</text>
+  <text x="100" y="430" font-family="Georgia, serif" font-size="60" fill="#d43e3e" opacity="0.4">♦</text>
+  <text x="360" y="430" font-family="Georgia, serif" font-size="60" fill="#61dafb" opacity="0.4">♣</text>
+</svg>

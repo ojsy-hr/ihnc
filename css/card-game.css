@@ -1,0 +1,304 @@
+/* Card game pages — shared layout for all card-based games */
+
+.game-main {
+  flex-grow: 1;
+  padding: 1.5rem 1.5rem 3rem;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.game-header h1 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin: 0;
+}
+
+/* ── Stats row ── */
+.stats-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  justify-content: center;
+}
+
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  min-width: 80px;
+}
+
+.stat-val {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* ── Card stage ── */
+.card-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.card-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.slot-label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.vs-divider {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.vs-divider.higher { color: var(--success); }
+.vs-divider.lower  { color: var(--danger); }
+.vs-divider.tie    { color: var(--text-muted); }
+
+/* ── Feedback message ── */
+.feedback-msg {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  animation: slideUp 0.2s ease;
+}
+.feedback-msg.correct { background: rgba(27,138,73,0.15); color: #4caf7d; }
+.feedback-msg.wrong   { background: rgba(212,62,62,0.15); color: var(--danger); }
+.feedback-msg.info    { background: var(--surface); color: var(--text-muted); }
+
+/* ── Action buttons ── */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.action-buttons .btn { min-width: 130px; }
+
+/* ── Hand display (for Blackjack etc.) ── */
+.hand-section {
+  margin-bottom: 1.5rem;
+}
+
+.hand-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.hand {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 110px;
+  align-items: center;
+}
+
+.hand-score {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 0.5rem;
+}
+
+.hand-score.bust   { color: var(--danger); }
+.hand-score.bj     { color: var(--accent); }
+.hand-score.win    { color: var(--success); }
+
+/* ── Ring of Fire card draw area ── */
+.rof-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.rof-rule-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  animation: slideUp 0.25s ease;
+}
+
+.rof-rule-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+
+.rof-rule-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rof-deck-count {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+/* ── Pontoon / Blackjack table ── */
+.game-table {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Snap ── */
+.snap-stage {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.snap-pile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.snap-pile-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.snap-pile-count {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.snap-btn {
+  font-size: 2rem;
+  font-weight: 900;
+  padding: 1.5rem 3rem;
+  border-radius: var(--radius-lg);
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+  transition: transform 0.1s, background var(--transition);
+  user-select: none;
+  letter-spacing: 0.1em;
+}
+.snap-btn:active { transform: scale(0.95); }
+.snap-btn.active { background: #c0392b; }
+.snap-btn.inactive { background: var(--border); color: var(--text-dim); cursor: default; }
+
+.cover-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 800;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+}
+.cover-screen.hidden { display: none !important; }
+.cover-screen h2 { color: var(--text); font-size: 1.8rem; margin: 0; }
+.cover-screen p  { color: var(--text-muted); margin: 0; }
+
+/* ── Ride the Bus ── */
+.rtb-card-display {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.rtb-round-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.rtb-question {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .game-header h1 { font-size: 1.6rem; }
+  .stat-box { padding: 0.6rem 0.8rem; min-width: 60px; }
+  .stat-val { font-size: 1.3rem; }
+  .action-buttons .btn { min-width: 110px; }
+  .card-stage { gap: 0.75rem; }
+}

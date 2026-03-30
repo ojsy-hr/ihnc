@@ -1,57 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Darts - ihavenocards</title>
+    <title>Darts Games — ihavenocards</title>
+    <meta name="description" content="Free darts scoring apps and card-based darts games — Blind Killer, Cricket, Shanghai, Killer and more. No download needed." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/darts/" />
+    <link rel="stylesheet" href="../../css/shared.css" />
     <link rel="stylesheet" href="../../css/hub.css" />
   </head>
   <body>
     <nav>
-      <a href="../../" class="logo">ihavenocards</a>
-
-      <div class="nav-menu-wrapper">
-        <button
-          class="nav-toggle"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          ☰
-        </button>
-
-        <div class="nav-links">
-          <a href="../about/">About</a>
-          <a href="../feedback/">Feedback</a>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../about/">About</a>
+            <a href="../feedback/">Feedback</a>
+          </div>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
       </div>
     </nav>
 
     <main>
-      <a href="../../" class="back-link">&larr; Back to Home</a>
-      <h1>🎯 Darts</h1>
-      <p>Pick a game to play.</p>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Darts</span>
+      </nav>
 
-      <div class="game-links" role="region" aria-label="Darts Games">
-        <a
-          href="blind-killer/"
-          class="game-button"
-          aria-label="Play Blind Killer"
-        >
-          Blind Killer
+      <h1>🎯 Darts</h1>
+      <p>Card-based darts games and scoring apps. Pick a game below.</p>
+
+      <div class="game-grid" role="list">
+        <a href="blind-killer/" class="game-card">
+          <div class="game-card-emoji">🎯</div>
+          <div class="game-card-name">Blind Killer</div>
+          <div class="game-card-desc">Draw a secret card. When your number gets hit on the board, you lose a life. Last card standing wins.</div>
+          <div class="game-card-meta">
+            <span class="badge">👥 2–10</span>
+          </div>
         </a>
-        <a
-          href="cricket/"
-          class="game-button"
-          aria-label="Play Cricket"
-        >
-          Cricket
+        <a href="cricket/" class="game-card">
+          <div class="game-card-emoji">🎯</div>
+          <div class="game-card-name">Cricket</div>
+          <div class="game-card-desc">Close 20 down to 15 and Bull. Score points on closed numbers. Highest score when all are closed wins.</div>
+          <div class="game-card-meta">
+            <span class="badge">👥 2–4</span>
+          </div>
+        </a>
+        <a href="shanghai/" class="game-card">
+          <div class="game-card-emoji">🎯</div>
+          <div class="game-card-name">Shanghai</div>
+          <div class="game-card-desc">Target numbers 1–7 in order. Three darts per round. Hit a Shanghai to win instantly.</div>
+          <div class="game-card-meta">
+            <span class="badge">👥 2–8</span>
+            <span class="badge badge-new">New</span>
+          </div>
+        </a>
+        <a href="killer/" class="game-card">
+          <div class="game-card-emoji">🎯</div>
+          <div class="game-card-name">Killer</div>
+          <div class="game-card-desc">Pick your number, hit it 3 times to become a killer, then hunt down all the other players.</div>
+          <div class="game-card-meta">
+            <span class="badge">👥 2–6</span>
+            <span class="badge badge-new">New</span>
+          </div>
         </a>
       </div>
     </main>
 
-    <footer>&copy; 2025 ihavenocards. All rights reserved.</footer>
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
 
-    <script src="../../js/nav-button.js"></script>
+    <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+    <script src="../../js/shared.js"></script>
     <script src="../../js/analytics.js" defer></script>
   </body>
 </html>

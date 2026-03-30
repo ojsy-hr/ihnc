@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cutthroat Pool — ihavenocards</title>
+    <meta name="description" content="Free Cutthroat Pool tracker — three players, five balls each. Pot everyone else's balls. Last group on the table wins." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/pool/cutthroat/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/cutthroat.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="ct-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../pool/">Pool</a><span class="sep">›</span>
+        <span class="current">Cutthroat Pool</span>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+        <h1 style="margin:0;font-size:2rem;color:var(--accent)">Cutthroat Pool 🎱</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <!-- Setup -->
+      <div id="setupSection">
+        <p style="color:var(--text-muted);margin-bottom:1.5rem">Three players. Balls 1–5, 6–10, and 11–15 are assigned by card draw (or choose below). Pot your opponents' balls — last group on the table wins.</p>
+        <div class="ct-setup">
+          <div class="ct-player-setup">
+            <label>Player 1 Name</label>
+            <input type="text" id="p1Name" placeholder="e.g. Dave" />
+            <label>Assigned Group</label>
+            <select id="p1Group">
+              <option value="1">1–5 (Yellows)</option>
+              <option value="2">6–10 (Reds)</option>
+              <option value="3">11–15 (Blues)</option>
+            </select>
+          </div>
+          <div class="ct-player-setup">
+            <label>Player 2 Name</label>
+            <input type="text" id="p2Name" placeholder="e.g. Sarah" />
+            <label>Assigned Group</label>
+            <select id="p2Group">
+              <option value="2">6–10 (Reds)</option>
+              <option value="1">1–5 (Yellows)</option>
+              <option value="3">11–15 (Blues)</option>
+            </select>
+          </div>
+          <div class="ct-player-setup">
+            <label>Player 3 Name</label>
+            <input type="text" id="p3Name" placeholder="e.g. Tom" />
+            <label>Assigned Group</label>
+            <select id="p3Group">
+              <option value="3">11–15 (Blues)</option>
+              <option value="1">1–5 (Yellows)</option>
+              <option value="2">6–10 (Reds)</option>
+            </select>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:1.25rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-ghost" onclick="randomAssign()">🎲 Random Assign</button>
+          <button class="btn btn-primary btn-lg" onclick="startGame()">Start Game</button>
+        </div>
+      </div>
+
+      <!-- Game -->
+      <div id="gameSection" class="hidden">
+        <div id="playerCards" class="ct-player-cards"></div>
+        <div class="ct-balls-section">
+          <h3 style="color:var(--text-muted);font-size:0.9rem;text-transform:uppercase;letter-spacing:0.06em;margin:0 0 1rem">Tap a ball to mark it as potted</h3>
+          <div id="ballGrid" class="ct-ball-grid"></div>
+        </div>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+          <button class="btn btn-ghost" id="undoBtn" onclick="undoPot()">↩ Undo Last</button>
+          <button class="btn btn-ghost btn-sm" onclick="confirmReset()">Reset</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Winner -->
+    <div id="winnerOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2 id="winnerMsg">🏆</h2>
+        <p id="winnerDetail"></p>
+        <button class="btn btn-outline" id="shareBtn">📤 Share Result</button>
+        <button class="btn btn-primary mt-1" onclick="closeOverlay('winnerOverlay'); confirmReset()">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Rules -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Cutthroat Pool</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Setup</h3>
+          <ul>
+            <li>3 players, each assigned a group of 5 balls (1–5, 6–10, or 11–15)</li>
+            <li>Groups are assigned randomly or by choice</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Gameplay</h3>
+          <ul>
+            <li>Players take turns at the pool table as normal</li>
+            <li>Aim to pot your <strong>opponents'</strong> balls, not your own</li>
+            <li>When a ball is potted, tap it in the app to mark it</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Winning</h3>
+          <ul>
+            <li>A player is <strong>eliminated</strong> when all 5 of their balls are potted</li>
+            <li>The last player with at least one ball still on the table wins</li>
+          </ul>
+        </div>
+        <div class="rules-section">
+          <h3>Note</h3>
+          <p>If you pot the 8-ball, you're out — follow your local house rules for scratches.</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/cutthroat.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

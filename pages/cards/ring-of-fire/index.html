@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ring of Fire (Kings Cup) — ihavenocards</title>
+    <meta name="description" content="Play Ring of Fire (Kings Cup) online free — draw a card, follow the rule. The classic pub drinking game. No cards needed." />
+    <meta property="og:title" content="Ring of Fire — ihavenocards" />
+    <meta property="og:description" content="The classic pub drinking game. Draw a card, follow the rule. Free on ihavenocards." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/cards/ring-of-fire/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../cards/">Card Games</a><span class="sep">›</span>
+        <span class="current">Ring of Fire</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Ring of Fire 🔥</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">Rules</button>
+      </div>
+
+      <p style="text-align:center;color:var(--text-muted);font-size:0.95rem;margin:0 0 1.5rem">
+        Also known as Kings Cup. Draw a card, everyone follows the rule.
+      </p>
+
+      <div class="rof-stage">
+        <div id="drawnCard" class="rof-drawn-card">
+          <div class="playing-card-xl face-down" id="deckPile" style="cursor:pointer" onclick="drawCard()" aria-label="Draw a card"></div>
+          <p class="rof-deck-count" id="deckCount">52 cards remaining — tap to draw</p>
+        </div>
+
+        <div id="ruleBox" class="rof-rule-box hidden">
+          <div id="drawnCardDisplay" style="display:flex;justify-content:center;margin-bottom:1rem"></div>
+          <div class="rof-rule-title" id="ruleTitle"></div>
+          <p class="rof-rule-desc" id="ruleDesc"></p>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="drawBtn" class="btn btn-primary btn-lg" onclick="drawCard()">Draw Card</button>
+        <button class="btn btn-ghost" onclick="newGame()">New Game</button>
+      </div>
+    </main>
+
+    <!-- Game Over Overlay -->
+    <div id="gameOverOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2>👑 Game Over!</h2>
+        <p>The 4th King has been drawn — someone must drink the King's Cup!</p>
+        <button class="btn btn-primary" onclick="closeOverlay('gameOverOverlay'); newGame();">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>Ring of Fire</h2>
+        <h3 class="rules-subtitle">The Rules</h3>
+        <div class="rules-section">
+          <h3>A — Waterfall 🌊</h3>
+          <p>Everyone drinks. You can only stop when the person to your right stops.</p>
+        </div>
+        <div class="rules-section">
+          <h3>2 — You 👉</h3>
+          <p>Choose someone to take a drink.</p>
+        </div>
+        <div class="rules-section">
+          <h3>3 — Me 🤙</h3>
+          <p>You drink.</p>
+        </div>
+        <div class="rules-section">
+          <h3>4 — Floor 🫳</h3>
+          <p>Last person to touch the floor drinks.</p>
+        </div>
+        <div class="rules-section">
+          <h3>5 — Guys 🍺</h3>
+          <p>All guys drink.</p>
+        </div>
+        <div class="rules-section">
+          <h3>6 — Chicks 🍷</h3>
+          <p>All girls drink.</p>
+        </div>
+        <div class="rules-section">
+          <h3>7 — Heaven ☝️</h3>
+          <p>Last to point to the sky drinks.</p>
+        </div>
+        <div class="rules-section">
+          <h3>8 — Mate 🤝</h3>
+          <p>Pick a drinking buddy — they drink whenever you do until a new 8 is drawn.</p>
+        </div>
+        <div class="rules-section">
+          <h3>9 — Rhyme 🎤</h3>
+          <p>Say a word. Go around rhyming. First to fail or repeat drinks.</p>
+        </div>
+        <div class="rules-section">
+          <h3>10 — Categories 📋</h3>
+          <p>Name a category (e.g. "football clubs"). Go around — first to fail drinks.</p>
+        </div>
+        <div class="rules-section">
+          <h3>J — Make a Rule 📜</h3>
+          <p>Create a rule that applies for the rest of the game. Break it and drink.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Q — Question Master ❓</h3>
+          <p>You're the Question Master until the next Queen. Anyone who answers your question drinks.</p>
+        </div>
+        <div class="rules-section">
+          <h3>K — King's Cup 👑</h3>
+          <p>Pour some of your drink into the King's Cup (a glass in the middle). The person who draws the 4th King must drink the whole cup!</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/ring_of_fire.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

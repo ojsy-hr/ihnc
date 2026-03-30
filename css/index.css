@@ -1,82 +1,14 @@
-/* Reset and base */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #121212;
-  color: #eee;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  user-select: none;
-}
-
-a {
-  color: #61dafb;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover,
-a:focus {
-  color: #21a1f1;
-  outline: none;
-}
-
-/* Navbar */
-nav {
-  background: #1f1f1f;
-  padding: 0.75rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-}
-.logo {
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.1em;
-  text-transform: lowercase;
-  color: #61dafb;
-}
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-/* Main Content */
-main {
-  position: relative;
-  overflow: hidden;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
+/* ── Hero / Cards Background ── */
 .cards-background {
-  position: absolute;
-  top: 37%;
+  position: fixed;
+  top: 35%;
   left: 0;
   width: 100%;
-  height: 18rem; /* increased to fit 15rem card icons + padding */
+  height: 18rem;
   transform: translateY(-50%);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.15;
-  user-select: none;
+  opacity: 0.08;
   overflow: hidden;
 }
 
@@ -84,7 +16,6 @@ main {
   display: flex;
   width: max-content;
   animation: scrollCards 120s linear infinite;
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
   white-space: nowrap;
   gap: 4rem;
 }
@@ -92,140 +23,83 @@ main {
 .cards-track {
   display: inline-block;
   white-space: nowrap;
-  font-size: 15rem;
+  font-size: 14rem;
   user-select: none;
   line-height: 1;
-  padding-top: 1rem; /* optional vertical adjustment */
-}
-
-.cards-track span {
-  display: inline-block;
-  padding-right: 2rem;
 }
 
 @keyframes scrollCards {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.content-wrapper {
+/* ── Main layout ── */
+main {
   position: relative;
   z-index: 1;
+  flex-grow: 1;
+  padding: 0 1.5rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-main h1 {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.07em;
-  color: #61dafb;
-}
-main p {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-  max-width: 600px;
-  color: #ccc;
-}
-
-/* Buttons for game pages */
-.game-links {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.game-button {
-  background: #282828;
-  color: #61dafb;
-  border: 2px solid #61dafb;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.game-button:hover,
-.game-button:focus {
-  background: #61dafb;
-  color: #121212;
-  outline: none;
-}
-.game-button svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-/* Footer */
-footer {
+/* ── Hero content ── */
+.hero-content {
   text-align: center;
-  padding: 1rem 1rem;
-  font-size: 0.9rem;
-  color: #555;
-  background: #1a1a1a;
-  user-select: none;
+  padding: 3.5rem 1rem 2.5rem;
 }
 
-.nav-menu-wrapper {
-  position: relative;
+.hero-content h1 {
+  font-size: 3rem;
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+  color: var(--text);
 }
 
-/* Show toggle button only on small screens */
-.nav-toggle {
-  display: none;
-  font-size: 1.8rem;
-  background: none;
-  color: #61dafb;
-  border: none;
-  cursor: pointer;
+.hero-content h1 span { color: var(--accent); }
+
+.hero-content p {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin: 0 0 1.75rem;
 }
 
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Games section ── */
+.games-section {
+  padding-top: 0.5rem;
+}
+
+/* ── Recently played ── */
+.recent-section {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.section-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 1rem;
+}
+
+.small-grid {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* ── Responsive ── */
 @media (max-width: 600px) {
-  .nav-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: #1f1f1f;
-    position: absolute;
-    top: 100%; /* appears directly below the toggle */
-    right: 0; /* aligns with the button */
-    width: 200px;
-    padding: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-    border-radius: 6px;
-    z-index: 1000;
-  }
-
-  .nav-links a {
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    border-bottom: 1px solid #333;
-  }
-
-  .nav-links.show {
-    display: flex;
-  }
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  main h1 {
-    font-size: 2.2rem;
-  }
-  .game-button {
-    width: 100%;
-    justify-content: center;
-  }
+  .hero-content h1 { font-size: 2.1rem; }
+  .hero-content p  { font-size: 1rem; }
+  .hero-actions .btn-lg { width: 100%; }
 }
