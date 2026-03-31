@@ -1,6 +1,6 @@
 (function () {
-  const SUPABASE_URL = "https://mrlvgvbwmmnfdqqadjjx.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_oGM47Qwl3QOfKSrgwGlCpw_m2ET95CI";
+  const SUPABASE_URL = "";
+  const SUPABASE_KEY = "";
 
   // Generate or retrieve a session ID
   let sessionId = sessionStorage.getItem("analytics_session_id");
