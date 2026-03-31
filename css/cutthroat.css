@@ -1,9 +1,47 @@
 /* Cutthroat Pool */
 
 .ct-main {
-  max-width: 860px;
+  max-width: 900px;
   margin: 1.5rem auto;
-  padding: 1.75rem 2rem;
+  padding: 1.5rem 1.5rem 3rem;
+}
+
+/* Game page header — h1 + how-to-play */
+/* .game-header and .game-header h1 inherited from shared.css */
+
+/* Setup description */
+.ct-setup-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin: 0 0 1.5rem;
+}
+
+/* Ball section label */
+.ct-section-label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 1rem;
+}
+
+/* Game action row */
+.ct-action-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* Setup action row */
+.ct-setup-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
 }
 
 /* Setup */
@@ -29,7 +67,7 @@
 }
 
 .ct-player-setup label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -102,7 +140,7 @@
 }
 
 .ct-player-group {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
   margin-top: 4px;
   text-transform: uppercase;
@@ -110,7 +148,7 @@
 }
 
 .ct-player-status {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   margin-top: 6px;
   font-weight: 600;
 }

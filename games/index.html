@@ -66,6 +66,16 @@
       let activeCategory = 'all';
       let searchTerm = '';
 
+      // Pre-select category from URL param (?category=darts etc.)
+      const _urlCat = new URLSearchParams(location.search).get('category');
+      const _validCats = ['all', 'cards', 'darts', 'pool', 'party'];
+      if (_urlCat && _validCats.includes(_urlCat)) {
+        activeCategory = _urlCat;
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.category === activeCategory);
+        });
+      }
+
       function render() {
         const games = getByCategory(activeCategory).filter(g =>
           !searchTerm || g.name.toLowerCase().includes(searchTerm) || g.description.toLowerCase().includes(searchTerm)

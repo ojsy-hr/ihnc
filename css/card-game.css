@@ -10,19 +10,7 @@
   flex-direction: column;
 }
 
-.game-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.game-header h1 {
-  font-size: 2rem;
-  color: var(--accent);
-  margin: 0;
-}
+/* .game-header and .game-header h1 are defined in shared.css */
 
 /* ── Stats row ── */
 .stats-row {
@@ -75,10 +63,10 @@
 }
 
 .slot-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   font-weight: 600;
 }
 
@@ -125,10 +113,10 @@
 }
 
 .hand-label {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   font-weight: 600;
   margin-bottom: 0.6rem;
 }
@@ -220,11 +208,11 @@
 }
 
 .snap-pile-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .snap-pile-count {
@@ -296,7 +284,7 @@
 
 /* ── Responsive ── */
 @media (max-width: 480px) {
-  .game-header h1 { font-size: 1.6rem; }
+  .game-header h1 { font-size: 1.8rem; }
   .stat-box { padding: 0.6rem 0.8rem; min-width: 60px; }
   .stat-val { font-size: 1.3rem; }
   .action-buttons .btn { min-width: 110px; }

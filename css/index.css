@@ -72,10 +72,44 @@ main {
   flex-wrap: wrap;
 }
 
-/* ── Games section ── */
-.games-section {
-  padding-top: 0.5rem;
+/* ── Categories section ── */
+.categories-section {
+  margin-top: 2rem;
+  padding-bottom: 1rem;
 }
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.category-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color var(--transition), transform 0.15s, box-shadow var(--transition);
+}
+
+.category-tile:hover,
+.category-tile:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(97, 218, 251, 0.12);
+  color: var(--text);
+  outline: none;
+}
+
+.category-tile-emoji   { font-size: 2.4rem; line-height: 1; margin-bottom: 0.3rem; }
+.category-tile-name    { font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+.category-tile-count   { font-size: 0.82rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.category-tile-tagline { font-size: 0.88rem; color: var(--text-muted); line-height: 1.4; margin-top: 0.2rem; }
 
 /* ── Recently played ── */
 .recent-section {
@@ -102,4 +136,5 @@ main {
   .hero-content h1 { font-size: 2.1rem; }
   .hero-content p  { font-size: 1rem; }
   .hero-actions .btn-lg { width: 100%; }
+  .categories-grid { grid-template-columns: 1fr 1fr; }
 }

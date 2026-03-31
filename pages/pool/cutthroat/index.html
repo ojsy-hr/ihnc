@@ -35,14 +35,14 @@
         <span class="current">Cutthroat Pool</span>
       </nav>
 
-      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
-        <h1 style="margin:0;font-size:2rem;color:var(--accent)">Cutthroat Pool 🎱</h1>
+      <div class="game-header">
+        <h1>Cutthroat Pool 🎱</h1>
         <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
       </div>
 
       <!-- Setup -->
       <div id="setupSection">
-        <p style="color:var(--text-muted);margin-bottom:1.5rem">Three players. Balls 1–5, 6–10, and 11–15 are assigned by card draw (or choose below). Pot your opponents' balls — last group on the table wins.</p>
+        <p class="ct-setup-desc">Three players. Balls 1–5, 6–10, and 11–15 are assigned by card draw (or choose below). Pot your opponents' balls — last group on the table wins.</p>
         <div class="ct-setup">
           <div class="ct-player-setup">
             <label>Player 1 Name</label>
@@ -75,7 +75,7 @@
             </select>
           </div>
         </div>
-        <div style="text-align:center;margin-top:1.25rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+        <div class="ct-setup-actions">
           <button class="btn btn-ghost" onclick="randomAssign()">🎲 Random Assign</button>
           <button class="btn btn-primary btn-lg" onclick="startGame()">Start Game</button>
         </div>
@@ -85,10 +85,10 @@
       <div id="gameSection" class="hidden">
         <div id="playerCards" class="ct-player-cards"></div>
         <div class="ct-balls-section">
-          <h3 style="color:var(--text-muted);font-size:0.9rem;text-transform:uppercase;letter-spacing:0.06em;margin:0 0 1rem">Tap a ball to mark it as potted</h3>
+          <p class="ct-section-label">Tap a ball to mark it as potted</p>
           <div id="ballGrid" class="ct-ball-grid"></div>
         </div>
-        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+        <div class="ct-action-row">
           <button class="btn btn-ghost" id="undoBtn" onclick="undoPot()">↩ Undo Last</button>
           <button class="btn btn-ghost btn-sm" onclick="confirmReset()">Reset</button>
         </div>

@@ -50,15 +50,9 @@
         <button id="installBtn" class="btn btn-ghost btn-sm hidden" style="margin-top:0.75rem">📲 Add to Home Screen</button>
       </div>
 
-      <section class="games-section">
-        <div class="category-filters" role="group" aria-label="Filter games by category">
-          <button class="filter-btn active" data-category="all">All</button>
-          <button class="filter-btn" data-category="cards">🃏 Card Games</button>
-          <button class="filter-btn" data-category="darts">🎯 Darts</button>
-          <button class="filter-btn" data-category="pool">🎱 Pool</button>
-          <button class="filter-btn" data-category="party">🔥 Party</button>
-        </div>
-        <div id="gameGrid" class="game-grid" role="list" aria-label="Available games"></div>
+      <section class="categories-section" aria-label="Browse by category">
+        <h2 class="section-label">Browse by Category</h2>
+        <div id="categoriesGrid" class="categories-grid"></div>
       </section>
 
       <section id="recentSection" class="recent-section hidden">
