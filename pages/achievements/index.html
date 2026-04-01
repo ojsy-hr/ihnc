@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trophies — ihavenocards</title>
+    <meta name="description" content="Your ihavenocards achievements and trophies. Unlock badges by playing games." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/achievements/" />
+    <link rel="stylesheet" href="../../css/shared.css" />
+    <link rel="stylesheet" href="../../css/achievements.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="/pages/achievements/">🏆 Trophies</a>
+            <a href="../about/">About</a>
+            <a href="../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main style="max-width:860px;margin:0 auto;padding:1.5rem 1rem">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Trophies</span>
+      </nav>
+
+      <div class="ach-hero">
+        <h1>🏆 Trophies</h1>
+        <p>Play games to unlock achievements. Your progress is saved on this device.</p>
+      </div>
+
+      <div class="ach-progress">
+        <span id="achProgressText">0 / 15 unlocked</span>
+        <div class="ach-progress-bar-wrap">
+          <div class="ach-progress-bar" id="achProgressBar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="ach-grid" id="achGrid"></div>
+    </main>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../js/shared.js"></script>
+    <script src="../../js/achievements.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('footerYear').textContent = new Date().getFullYear();
+        const all      = getAllAchievements();
+        const unlocked = getUnlockedAchievements();
+        const grid     = document.getElementById('achGrid');
+
+        grid.innerHTML = all.map(ach => {
+          const done = unlocked.includes(ach.id);
+          return `
+            <div class="ach-card ${done ? 'unlocked' : 'locked'}" title="${done ? 'Unlocked!' : 'Locked'}">
+              <div class="ach-emoji">${ach.emoji}</div>
+              <div class="ach-title">${ach.title}</div>
+              <div class="ach-desc">${ach.desc}</div>
+            </div>`;
+        }).join('');
+
+        const pct = Math.round((unlocked.length / all.length) * 100);
+        document.getElementById('achProgressText').textContent = `${unlocked.length} / ${all.length} unlocked`;
+        document.getElementById('achProgressBar').style.width = pct + '%';
+      });
+    </script>
+    <script src="../../js/analytics.js" defer></script>
+  </body>
+</html>

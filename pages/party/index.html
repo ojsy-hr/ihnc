@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Party Games — ihavenocards</title>
+    <meta name="description" content="Free party and drinking games playable on your phone — Ring of Fire, Never Have I Ever, Truth or Dare, Ride the Bus and more. No download needed." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/party/" />
+    <link rel="stylesheet" href="../../css/shared.css" />
+    <link rel="stylesheet" href="../../css/hub.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../about/">About</a>
+            <a href="../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Party Games</span>
+      </nav>
+
+      <h1>🔥 Party Games</h1>
+      <p>Drinking games, social games and party tools — all free on any phone.</p>
+
+      <div class="game-grid" role="list">
+        <a href="../cards/ring-of-fire/" class="game-card">
+          <div class="game-card-emoji">🔥</div>
+          <div class="game-card-name">Ring of Fire</div>
+          <div class="game-card-desc">Draw a card, follow the rule. The classic pub drinking game. Also known as Kings Cup.</div>
+          <div class="game-card-meta"><span class="badge">👥 3+</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="../cards/ride-the-bus/" class="game-card">
+          <div class="game-card-emoji">🚌</div>
+          <div class="game-card-name">Ride the Bus</div>
+          <div class="game-card-desc">Guess colour, higher/lower, in/out, and suit. Wrong answer? Take a sip.</div>
+          <div class="game-card-meta"><span class="badge">👥 2+</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="never-have-i-ever/" class="game-card">
+          <div class="game-card-emoji">🙈</div>
+          <div class="game-card-name">Never Have I Ever</div>
+          <div class="game-card-desc">Never Have I Ever... Flip through confessions and see who's done the most.</div>
+          <div class="game-card-meta"><span class="badge">👥 2+</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="truth-or-dare/" class="game-card">
+          <div class="game-card-emoji">🎭</div>
+          <div class="game-card-name">Truth or Dare</div>
+          <div class="game-card-desc">Reveal the truth or face the dare. Take turns — or take a sip and pass.</div>
+          <div class="game-card-meta"><span class="badge">👥 2+</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="drink-tracker/" class="game-card">
+          <div class="game-card-emoji">🍺</div>
+          <div class="game-card-name">Drink Tracker</div>
+          <div class="game-card-desc">Keep score of who's had what. A simple tally counter for any drinking game.</div>
+          <div class="game-card-meta"><span class="badge">👥 2–8</span><span class="badge badge-new">New</span></div>
+        </a>
+        <a href="spin-the-wheel/" class="game-card">
+          <div class="game-card-emoji">🎡</div>
+          <div class="game-card-name">Spin the Wheel</div>
+          <div class="game-card-desc">Add player names and spin to pick someone at random. Perfect for any game.</div>
+          <div class="game-card-meta"><span class="badge">👥 2–12</span><span class="badge badge-new">New</span></div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+    <script src="../../js/shared.js"></script>
+    <script src="../../js/analytics.js" defer></script>
+  </body>
+</html>

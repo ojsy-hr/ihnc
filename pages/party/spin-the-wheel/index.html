@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spin the Wheel — ihavenocards</title>
+    <meta name="description" content="Spin the wheel to pick a random player. Add names, spin, and let fate decide. Free on any phone." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/party/spin-the-wheel/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+    <style>
+      .wheel-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+      }
+      .wheel-wrap {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .wheel-pointer {
+        width: 0;
+        height: 0;
+        border-left: 14px solid transparent;
+        border-right: 14px solid transparent;
+        border-top: 26px solid var(--accent);
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        z-index: 10;
+        position: relative;
+      }
+      #wheelCanvas {
+        border-radius: 50%;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+        display: block;
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+      }
+      #wheelCanvas:hover { box-shadow: 0 6px 28px rgba(97,218,251,0.25); }
+      .wheel-entries {
+        width: 100%;
+        max-width: 420px;
+      }
+      .wheel-entry-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-bottom: 0.75rem;
+      }
+      .wheel-entry-row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        animation: slideUp 0.2s ease;
+      }
+      .wheel-entry-row input {
+        flex: 1;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--surface-raised);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.95rem;
+        user-select: text;
+      }
+      .wheel-entry-row input:focus { outline: none; border-color: var(--accent); }
+      .wheel-remove-btn {
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        color: var(--text-dim);
+        cursor: pointer;
+        padding: 0.4rem 0.6rem;
+        font-size: 1rem;
+        line-height: 1;
+        transition: all var(--transition);
+      }
+      .wheel-remove-btn:hover { border-color: var(--danger); color: var(--danger); }
+      .wheel-warning { font-size: 0.82rem; color: var(--danger); text-align: center; }
+      .spin-result-name { font-size: 2rem; font-weight: 800; color: var(--accent); margin: 0.5rem 0; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../">Party Games</a><span class="sep">›</span>
+        <span class="current">Spin the Wheel</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Spin the Wheel 🎡</h1>
+      </div>
+
+      <div class="wheel-layout">
+        <div class="wheel-wrap">
+          <div class="wheel-pointer" id="wheelPointer"></div>
+          <canvas id="wheelCanvas" width="300" height="300" aria-label="Spin the wheel"></canvas>
+          <button class="btn btn-primary btn-lg" id="spinBtn" onclick="spinWheel()">Spin!</button>
+        </div>
+
+        <div class="wheel-entries">
+          <p style="font-size:0.88rem;color:var(--text-dim);margin:0 0 0.6rem;text-align:center">Players (tap name to edit, × to remove)</p>
+          <div class="wheel-entry-list" id="entryList"></div>
+          <div id="wheelWarning" class="wheel-warning hidden">Add at least 2 names to spin.</div>
+          <button class="btn btn-ghost btn-sm" id="addEntryBtn" style="width:100%">+ Add Player</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Result Overlay -->
+    <div id="spinResultOverlay" class="overlay hidden" aria-modal="true">
+      <div class="overlay-content" style="text-align:center">
+        <div style="font-size:2.5rem">🎡</div>
+        <h2 style="margin:0.5rem 0 0">The wheel chose…</h2>
+        <div class="spin-result-name" id="spinResultName"></div>
+        <div class="action-buttons">
+          <button class="btn btn-primary" onclick="closeOverlay('spinResultOverlay')">Spin Again</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/achievements.js"></script>
+    <script src="../../../js/spin_the_wheel.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

@@ -40,6 +40,8 @@
       <div class="game-header">
         <h1>Ring of Fire 🔥</h1>
         <button id="howToPlayBtn" class="how-to-play-btn">Rules</button>
+        <button id="editRulesBtn" class="how-to-play-btn" style="border-color:var(--text-dim);color:var(--text-dim)">Edit Rules ✏️</button>
+        <span class="badge badge-new hidden" id="customRulesBadge">Custom Rules</span>
       </div>
 
       <p style="text-align:center;color:var(--text-muted);font-size:0.95rem;margin:0 0 1.5rem">
@@ -71,6 +73,20 @@
         <h2>👑 Game Over!</h2>
         <p>The 4th King has been drawn — someone must drink the King's Cup!</p>
         <button class="btn btn-primary" onclick="closeOverlay('gameOverOverlay'); newGame();">Play Again</button>
+      </div>
+    </div>
+
+    <!-- House Rules Editor Overlay -->
+    <div id="rulesEditorOverlay" class="overlay hidden" aria-modal="true">
+      <div class="overlay-content rules-content" style="max-width:520px">
+        <h2>Edit House Rules ✏️</h2>
+        <h3 class="rules-subtitle">Customise your card rules — saved on this device</h3>
+        <div id="ruleEditorRows"></div>
+        <div style="display:flex;gap:0.75rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="saveCustomRules()">Save Rules</button>
+          <button class="btn btn-ghost" onclick="resetAllRules()">Reset to Defaults</button>
+          <button class="btn btn-ghost" onclick="closeOverlay('rulesEditorOverlay')">Cancel</button>
+        </div>
       </div>
     </div>
 
@@ -140,6 +156,7 @@
     </footer>
 
     <script src="../../../js/shared.js"></script>
+    <script src="../../../js/achievements.js"></script>
     <script src="../../../js/ring_of_fire.js"></script>
     <script src="../../../js/analytics.js" defer></script>
   </body>

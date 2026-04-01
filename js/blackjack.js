@@ -178,10 +178,13 @@ function endRound() {
     msg = '🤝 Both Blackjack — Push!'; type = 'info'; stats.push++;
   } else if (playerBJ) {
     msg = '🂡 Blackjack! You win!'; type = 'correct'; stats.wins++;
+    if (typeof recordStat === 'function') recordStat('bjWins', 1);
   } else if (dealerBust) {
     msg = '🎉 Dealer busts! You win!'; type = 'correct'; stats.wins++;
+    if (typeof recordStat === 'function') recordStat('bjWins', 1);
   } else if (pt > dt) {
     msg = `🎉 You win! ${pt} vs ${dt}.`; type = 'correct'; stats.wins++;
+    if (typeof recordStat === 'function') recordStat('bjWins', 1);
   } else if (pt === dt) {
     msg = `🤝 Push! Both ${pt}.`; type = 'info'; stats.push++;
   } else {

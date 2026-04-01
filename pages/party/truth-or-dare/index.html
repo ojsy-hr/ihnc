@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Truth or Dare — ihavenocards</title>
+    <meta name="description" content="Play Truth or Dare free on your phone — 60+ truths and dares, mild to wild. No download needed." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/party/truth-or-dare/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+    <style>
+      .tod-setup { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+      .tod-game { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+      .tod-player-label {
+        font-size: 1rem; font-weight: 700; color: var(--accent);
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 0.4rem 1.2rem;
+        text-align: center;
+      }
+      /* Choice card — front face */
+      .tod-card-scene {
+        width: 100%;
+        max-width: 420px;
+        perspective: 800px;
+      }
+      .tod-card-inner {
+        position: relative;
+        width: 100%;
+        min-height: 200px;
+        transform-style: preserve-3d;
+        transition: transform 0.55s ease;
+      }
+      .tod-card-inner.flipped { transform: rotateY(180deg); }
+      .tod-face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+      }
+      .tod-face-front {
+        background: var(--surface);
+        border: 2px solid var(--border);
+        gap: 1rem;
+      }
+      .tod-face-back {
+        background: var(--surface);
+        border: 2px solid var(--accent);
+        transform: rotateY(180deg);
+        flex-direction: column;
+        padding: 1.75rem 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 18px rgba(97,218,251,0.12);
+      }
+      .tod-choice-btn {
+        flex: 1;
+        min-height: 130px;
+        border: none;
+        font-family: inherit;
+        font-size: 1.3rem;
+        font-weight: 800;
+        cursor: pointer;
+        border-radius: var(--radius-lg);
+        transition: filter 0.15s;
+        letter-spacing: 0.05em;
+      }
+      .tod-choice-btn:active { filter: brightness(0.88); }
+      .tod-truth-btn {
+        background: rgba(97,218,251,0.15);
+        color: var(--accent);
+        border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+        border-right: 1px solid var(--border);
+      }
+      [data-theme="light"] .tod-truth-btn { background: rgba(0,119,170,0.1); }
+      .tod-dare-btn {
+        background: rgba(212,62,62,0.15);
+        color: var(--danger);
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      }
+      [data-theme="light"] .tod-dare-btn { background: rgba(212,62,62,0.08); }
+      .tod-type-label {
+        font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+        letter-spacing: 0.12em; margin-bottom: 0.5rem;
+      }
+      .tod-type-truth { color: var(--accent); }
+      .tod-type-dare { color: var(--danger); }
+      .tod-text {
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.45;
+        animation: slideUp 0.3s ease;
+      }
+      .tod-counters { display: flex; gap: 1rem; font-size: 0.8rem; color: var(--text-dim); }
+      .vibe-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../">Party Games</a><span class="sep">›</span>
+        <span class="current">Truth or Dare</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Truth or Dare 🎭</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <!-- Setup -->
+      <div id="setupSection">
+        <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem">Take turns — pick truth or dare. Chicken out? Take a sip and pass.</p>
+        <div class="tod-setup">
+          <div>
+            <p style="font-size:0.88rem;color:var(--text-dim);margin:0 0 0.5rem;text-align:center">Vibe</p>
+            <div class="vibe-filters">
+              <button class="filter-btn" data-vibe="mild">🌸 Mild</button>
+              <button class="filter-btn" data-vibe="spicy">🌶️ Spicy</button>
+              <button class="filter-btn" data-vibe="wild">🔥 Wild</button>
+              <button class="filter-btn active" data-vibe="mix">🎲 Mix</button>
+            </div>
+          </div>
+          <div>
+            <label style="color:var(--text-muted);font-size:0.9rem;display:block;margin-bottom:0.5rem;text-align:center">
+              Players: <span id="numPlayersDisplay">3</span>
+            </label>
+            <input type="range" id="numPlayers" min="2" max="8" value="3" style="width:100%">
+          </div>
+          <div id="playerNameInputs"></div>
+          <button class="btn btn-primary" id="startBtn">Start Game</button>
+        </div>
+      </div>
+
+      <!-- Game -->
+      <div id="gameSection" class="tod-game hidden">
+        <div class="tod-player-label" id="currentPlayerLabel">Player 1's turn</div>
+        <div class="tod-counters">
+          <span id="truthsLeft">— truths left</span>
+          <span>·</span>
+          <span id="daresLeft">— dares left</span>
+        </div>
+        <div class="tod-card-scene">
+          <div class="tod-card-inner" id="todCardInner">
+            <!-- Front: choice -->
+            <div class="tod-face tod-face-front" id="todFront">
+              <button class="tod-choice-btn tod-truth-btn" onclick="pickType('truth')">TRUTH</button>
+              <button class="tod-choice-btn tod-dare-btn" onclick="pickType('dare')">DARE</button>
+            </div>
+            <!-- Back: statement -->
+            <div class="tod-face tod-face-back" id="todBack">
+              <div class="tod-type-label" id="todTypeLabel">TRUTH</div>
+              <div class="tod-text" id="todText">…</div>
+            </div>
+          </div>
+        </div>
+        <div id="todActions" class="action-buttons hidden" style="flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="nextTurn()">Done — Next Player</button>
+          <button class="btn btn-ghost" onclick="passTurn()">Pass (take a sip)</button>
+        </div>
+        <div id="todChoosePrompt" style="font-size:0.8rem;color:var(--text-dim)">Choose Truth or Dare</div>
+        <button class="btn btn-ghost btn-sm" onclick="endGame()">End Game</button>
+      </div>
+    </main>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden" aria-modal="true">
+      <div class="overlay-content rules-content">
+        <h2>Truth or Dare</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>Taking Your Turn</h3>
+          <p>The current player picks Truth or Dare by tapping their choice. The card flips to reveal the challenge.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Passing</h3>
+          <p>Not feeling brave? Tap <strong>Pass</strong> — you take a sip and the turn moves on. No judgment!</p>
+        </div>
+        <div class="rules-section">
+          <h3>Vibes</h3>
+          <ul>
+            <li><strong>Mild</strong> — Safe for everyone</li>
+            <li><strong>Spicy</strong> — Getting personal</li>
+            <li><strong>Wild</strong> — No holds barred</li>
+            <li><strong>Mix</strong> — A bit of everything</li>
+          </ul>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/achievements.js"></script>
+    <script src="../../../js/truth_or_dare.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

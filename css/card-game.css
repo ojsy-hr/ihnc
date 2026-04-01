@@ -290,3 +290,84 @@
   .action-buttons .btn { min-width: 110px; }
   .card-stage { gap: 0.75rem; }
 }
+
+/* ── Ring of Fire — House Rules Editor ── */
+.rule-editor-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.rule-editor-row:last-child { border-bottom: none; }
+
+.rule-editor-rank {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.rule-editor-input {
+  width: 100%;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  user-select: text;
+  transition: border-color var(--transition);
+}
+.rule-editor-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.rule-editor-textarea {
+  width: 100%;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  resize: none;
+  max-height: 80px;
+  min-height: 52px;
+  user-select: text;
+  transition: border-color var(--transition);
+  line-height: 1.45;
+}
+.rule-editor-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.rule-editor-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rule-reset-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  font-family: inherit;
+  transition: color var(--transition);
+}
+.rule-reset-btn:hover { color: var(--accent); }
+
+.rule-char-count {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+.rule-char-count.over { color: var(--danger); }

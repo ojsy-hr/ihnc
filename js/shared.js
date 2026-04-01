@@ -106,6 +106,11 @@ function trackGame(gameId) {
   const list = Store.get(RECENT_KEY, []).filter(r => r.id !== gameId);
   list.unshift({ id: gameId, ts: Date.now() });
   Store.set(RECENT_KEY, list.slice(0, 5));
+  // Fire achievement stats if module is loaded
+  if (typeof recordStat === 'function') {
+    recordStat('gamesPlayed', 1);
+    recordStat('uniqueGames', gameId);
+  }
 }
 
 function getRecentGames() {
@@ -128,12 +133,17 @@ function saveSettings(gameId, settings) {
 async function shareResult(text, url) {
   const href = url || location.href;
   if (navigator.share) {
-    try { await navigator.share({ title: 'ihavenocards', text, url: href }); return 'shared'; }
+    try {
+      await navigator.share({ title: 'ihavenocards', text, url: href });
+      if (typeof recordStat === 'function') recordStat('shared', true);
+      return 'shared';
+    }
     catch (_) {}
   }
   try {
     await navigator.clipboard.writeText(text + '\n' + href);
     showToast('Copied to clipboard!');
+    if (typeof recordStat === 'function') recordStat('shared', true);
     return 'copied';
   } catch (_) { return false; }
 }

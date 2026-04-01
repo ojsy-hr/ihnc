@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Drink Tracker — ihavenocards</title>
+    <meta name="description" content="Track drinks for every player during any pub game. Simple tally counter, up to 8 players. Free on any phone." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/party/drink-tracker/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+    <style>
+      .dt-setup { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+      .dt-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 700px;
+      }
+      .dt-player-card {
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 1rem 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        transition: border-color var(--transition);
+      }
+      .dt-player-name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-align: center;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+      }
+      .dt-player-name:hover { color: var(--accent); }
+      .dt-count {
+        font-size: 2.8rem;
+        font-weight: 800;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .dt-tally {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        justify-content: center;
+        min-height: 20px;
+      }
+      .dt-dot {
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.6;
+      }
+      .dt-dot.gate-mark {
+        width: 14px; height: 10px;
+        border-radius: 2px;
+        opacity: 0.9;
+      }
+      .dt-buttons {
+        display: flex;
+        gap: 0.4rem;
+        width: 100%;
+      }
+      .dt-btn {
+        flex: 1;
+        height: 60px;
+        font-size: 1.6rem;
+        font-weight: 800;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface-raised);
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.1s;
+        font-family: inherit;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .dt-btn:active { transform: scale(0.93); }
+      .dt-btn-plus { color: var(--success); border-color: var(--success); }
+      .dt-btn-plus:active { background: var(--success); color: #fff; }
+      .dt-btn-minus { color: var(--danger); border-color: var(--danger); }
+      .dt-btn-minus:active { background: var(--danger); color: #fff; }
+      .dt-controls {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 0.5rem;
+      }
+      /* colour accents per player */
+      .dt-player-card[data-color="0"] { border-color: #61dafb44; }
+      .dt-player-card[data-color="0"] .dt-count { color: #61dafb; }
+      .dt-player-card[data-color="0"] .dt-dot { color: #61dafb; }
+      .dt-player-card[data-color="1"] { border-color: #f06f4444; }
+      .dt-player-card[data-color="1"] .dt-count { color: #f06f44; }
+      .dt-player-card[data-color="1"] .dt-dot { color: #f06f44; }
+      .dt-player-card[data-color="2"] { border-color: #a78bfa44; }
+      .dt-player-card[data-color="2"] .dt-count { color: #a78bfa; }
+      .dt-player-card[data-color="2"] .dt-dot { color: #a78bfa; }
+      .dt-player-card[data-color="3"] { border-color: #34d39944; }
+      .dt-player-card[data-color="3"] .dt-count { color: #34d399; }
+      .dt-player-card[data-color="3"] .dt-dot { color: #34d399; }
+      .dt-player-card[data-color="4"] { border-color: #fbbf2444; }
+      .dt-player-card[data-color="4"] .dt-count { color: #fbbf24; }
+      .dt-player-card[data-color="4"] .dt-dot { color: #fbbf24; }
+      .dt-player-card[data-color="5"] { border-color: #f472b644; }
+      .dt-player-card[data-color="5"] .dt-count { color: #f472b6; }
+      .dt-player-card[data-color="5"] .dt-dot { color: #f472b6; }
+      .dt-player-card[data-color="6"] { border-color: #38bdf844; }
+      .dt-player-card[data-color="6"] .dt-count { color: #38bdf8; }
+      .dt-player-card[data-color="6"] .dt-dot { color: #38bdf8; }
+      .dt-player-card[data-color="7"] { border-color: #fb923c44; }
+      .dt-player-card[data-color="7"] .dt-count { color: #fb923c; }
+      .dt-player-card[data-color="7"] .dt-dot { color: #fb923c; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../">Party Games</a><span class="sep">›</span>
+        <span class="current">Drink Tracker</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Drink Tracker 🍺</h1>
+      </div>
+
+      <!-- Setup -->
+      <div id="setupSection">
+        <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem">Keep score of who's had what during any drinking game.</p>
+        <div class="dt-setup">
+          <div>
+            <label style="color:var(--text-muted);font-size:0.9rem;display:block;margin-bottom:0.5rem;text-align:center">
+              Players: <span id="numPlayersDisplay">4</span>
+            </label>
+            <input type="range" id="numPlayers" min="2" max="8" value="4" style="width:100%">
+          </div>
+          <div id="playerNameInputs"></div>
+          <button class="btn btn-primary" id="startBtn">Start Tracking</button>
+        </div>
+      </div>
+
+      <!-- Tracker -->
+      <div id="trackerSection" class="hidden" style="display:none;flex-direction:column;align-items:center;gap:1.25rem">
+        <div class="dt-grid" id="playerGrid"></div>
+        <div class="dt-controls">
+          <button class="btn btn-ghost btn-sm" onclick="confirmReset()">Reset All</button>
+          <button class="btn btn-ghost btn-sm" onclick="backToSetup()">Change Players</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Confirm Reset Overlay -->
+    <div id="confirmOverlay" class="overlay hidden" aria-modal="true">
+      <div class="confirm-box">
+        <h3 style="color:var(--text);margin-top:0">Reset all counts?</h3>
+        <p style="color:var(--text-muted)">This will set everyone back to zero.</p>
+        <div class="confirm-buttons">
+          <button class="btn btn-danger" onclick="doReset()">Reset</button>
+          <button class="btn btn-ghost" onclick="closeOverlay('confirmOverlay')">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Name Edit Overlay -->
+    <div id="nameEditOverlay" class="overlay hidden" aria-modal="true">
+      <div class="confirm-box">
+        <h3 style="color:var(--text);margin-top:0">Edit Name</h3>
+        <input id="nameEditInput" type="text" style="width:100%;padding:0.6rem 0.8rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-raised);color:var(--text);font-family:inherit;font-size:1rem;user-select:text;text-align:center" />
+        <div class="confirm-buttons">
+          <button class="btn btn-primary" onclick="saveNameEdit()">Save</button>
+          <button class="btn btn-ghost" onclick="closeOverlay('nameEditOverlay')">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/achievements.js"></script>
+    <script src="../../../js/drink_tracker.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

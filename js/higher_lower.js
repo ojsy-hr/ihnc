@@ -117,6 +117,7 @@ function guess(direction) {
 function showGameOver(deckEmpty = false) {
   const savedBest = parseInt(localStorage.getItem('ihnc_hl_best') || '0');
   if (streak > savedBest) localStorage.setItem('ihnc_hl_best', streak);
+  if (typeof recordStat === 'function') recordStat('hlBest', streak);
 
   const title = deckEmpty ? '🏆 Deck Complete!' : '💀 Game Over!';
   const msg = deckEmpty

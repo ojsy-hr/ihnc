@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Never Have I Ever — ihavenocards</title>
+    <meta name="description" content="Play Never Have I Ever free on your phone — 120+ prompts, mild to wild. No download needed." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/party/never-have-i-ever/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/card-game.css" />
+    <style>
+      .nhie-setup { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+      .vibe-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+      .nhie-game { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+      .nhie-card {
+        background: var(--surface);
+        border: 2px solid var(--accent);
+        border-radius: var(--radius-lg);
+        padding: 2rem 1.5rem;
+        text-align: center;
+        max-width: 420px;
+        width: 100%;
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.15s, box-shadow var(--transition);
+        box-shadow: 0 4px 18px rgba(97,218,251,0.1);
+        animation: slideUp 0.3s ease;
+      }
+      .nhie-card:active { transform: perspective(600px) rotateX(4deg) scale(0.98); }
+      .nhie-prefix { font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+      .nhie-statement { font-size: clamp(1.1rem, 4vw, 1.5rem); font-weight: 600; color: var(--text); line-height: 1.4; }
+      .nhie-counter { font-size: 0.85rem; color: var(--text-dim); }
+      .nhie-players { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+      .nhie-player-btn {
+        min-width: 80px;
+        min-height: 44px;
+        padding: 0.4rem 0.8rem;
+        border-radius: var(--radius);
+        border: 2px solid var(--border);
+        background: var(--surface);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all var(--transition);
+        font-family: inherit;
+      }
+      .nhie-player-btn.done {
+        background: var(--danger);
+        border-color: var(--danger);
+        color: #fff;
+      }
+      .nhie-done-overlay {
+        text-align: center;
+        padding: 2rem 1rem;
+        animation: slideUp 0.3s ease;
+      }
+      .nhie-done-overlay .big-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <main class="game-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../">Party Games</a><span class="sep">›</span>
+        <span class="current">Never Have I Ever</span>
+      </nav>
+
+      <div class="game-header">
+        <h1>Never Have I Ever 🙈</h1>
+        <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+      </div>
+
+      <!-- Setup -->
+      <div id="setupSection">
+        <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem">Flip through confessions — anyone who's done it takes a sip!</p>
+        <div class="nhie-setup">
+          <div>
+            <p style="font-size:0.88rem;color:var(--text-dim);margin:0 0 0.5rem;text-align:center">Vibe</p>
+            <div class="vibe-filters">
+              <button class="filter-btn" data-vibe="mild">🌸 Mild</button>
+              <button class="filter-btn" data-vibe="spicy">🌶️ Spicy</button>
+              <button class="filter-btn" data-vibe="wild">🔥 Wild</button>
+              <button class="filter-btn active" data-vibe="mix">🎲 Mix</button>
+            </div>
+          </div>
+          <div>
+            <label style="color:var(--text-muted);font-size:0.9rem;display:block;margin-bottom:0.5rem;text-align:center">
+              Players: <span id="numPlayersDisplay">3</span>
+            </label>
+            <input type="range" id="numPlayers" min="2" max="8" value="3" style="width:100%">
+          </div>
+          <div id="playerNameInputs"></div>
+          <button class="btn btn-primary" id="startBtn">Start Game</button>
+        </div>
+      </div>
+
+      <!-- Game -->
+      <div id="gameSection" class="nhie-game hidden">
+        <div class="nhie-counter" id="cardCounter">1 / 60</div>
+        <div class="nhie-card" id="nhieCard" onclick="nextCard()" role="button" tabindex="0" aria-label="Tap to reveal next statement">
+          <div class="nhie-prefix">Never Have I Ever…</div>
+          <div class="nhie-statement" id="statementText">Loading…</div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-dim);margin:0">Tap the card for the next one</p>
+        <div>
+          <p style="font-size:0.85rem;color:var(--text-muted);text-align:center;margin:0 0 0.6rem">Who's done it? (tap to mark)</p>
+          <div class="nhie-players" id="playerButtons"></div>
+        </div>
+        <div class="action-buttons" style="flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="nextCard()">Next Card</button>
+          <button class="btn btn-ghost" onclick="reshuffleRemaining()">Reshuffle</button>
+          <button class="btn btn-ghost" onclick="endGame()">End Game</button>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div id="doneSection" class="nhie-done-overlay hidden">
+        <span class="big-emoji">🙈</span>
+        <h2 style="color:var(--accent)">That's the deck!</h2>
+        <p style="color:var(--text-muted)">You've been through all the cards. Hope someone's face is red!</p>
+        <div class="action-buttons">
+          <button class="btn btn-primary" onclick="restartGame()">Play Again</button>
+          <button class="btn btn-ghost" onclick="backToSetup()">Change Settings</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Rules Overlay -->
+    <div id="rulesOverlay" class="overlay hidden" aria-modal="true">
+      <div class="overlay-content rules-content">
+        <h2>Never Have I Ever</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>The Basics</h3>
+          <p>Tap through confession cards. For each one, anyone who <em>has</em> done it takes a sip (or admits it)!</p>
+        </div>
+        <div class="rules-section">
+          <h3>Marking Who's Done It</h3>
+          <p>Tap a player's button to mark them — it turns red. Buttons reset automatically on the next card.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Vibes</h3>
+          <ul>
+            <li><strong>Mild</strong> — Safe for everyone</li>
+            <li><strong>Spicy</strong> — Getting personal</li>
+            <li><strong>Wild</strong> — No holds barred</li>
+            <li><strong>Mix</strong> — A bit of everything</li>
+          </ul>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; <span id="footerYear"></span> ihavenocards. All rights reserved.
+    </footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/achievements.js"></script>
+    <script src="../../../js/never_have_i_ever.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>

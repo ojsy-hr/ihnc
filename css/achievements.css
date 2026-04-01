@@ -1,0 +1,85 @@
+/* Achievements page */
+
+.ach-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.ach-hero h1 { color: var(--accent); margin-bottom: 0.25rem; }
+.ach-hero p  { color: var(--text-muted); margin: 0; }
+
+.ach-progress {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+.ach-progress-bar-wrap {
+  max-width: 320px;
+  margin: 0.5rem auto 0;
+  background: var(--surface-raised);
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.ach-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 20px;
+  transition: width 0.5s ease;
+}
+
+.ach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.9rem;
+}
+
+.ach-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.ach-card.unlocked {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(97, 218, 251, 0.18);
+}
+
+.ach-card.locked {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+}
+
+.ach-emoji {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.ach-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ach-desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.ach-card.unlocked .ach-title { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .ach-grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
+  .ach-card { padding: 1rem 0.75rem; }
+  .ach-emoji { font-size: 1.8rem; }
+}
