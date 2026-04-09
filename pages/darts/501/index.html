@@ -43,16 +43,9 @@
       <div id="setupSection" class="controls">
 
         <div class="fiveo1-option-row">
-          <span class="fiveo1-seg-label">Starting Score</span>
-          <div id="startingScoreBtns" class="fiveo1-seg-btns">
-            <button data-val="101">101</button>
-            <button data-val="201">201</button>
-            <button data-val="301">301</button>
-            <button data-val="401">401</button>
-            <button data-val="501" class="active">501</button>
-            <button data-val="701">701</button>
-            <button data-val="1001">1001</button>
-          </div>
+          <label class="fiveo1-seg-label" for="startingScoreInput">Starting Score</label>
+          <input type="number" id="startingScoreInput" class="fiveo1-score-input fiveo1-start-input"
+                 min="11" max="5000" value="501" inputmode="numeric" />
         </div>
 
         <div class="fiveo1-option-row">

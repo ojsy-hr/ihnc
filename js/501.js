@@ -136,18 +136,14 @@ function updateSetup() {
   }
 }
 
-function selectStartScore(val) {
-  selectedStartScore = val;
-  document.querySelectorAll('#startingScoreBtns button').forEach(btn => {
-    btn.classList.toggle('active', parseInt(btn.dataset.val, 10) === val);
-  });
-}
-
 function startGame() {
   const inputs = document.querySelectorAll('#nameInputs input');
   const names = Array.from(inputs).map((inp, i) => inp.value.trim() || `Player ${i + 1}`);
   saveNames(names.filter(Boolean));
 
+  const startVal = parseInt(document.getElementById('startingScoreInput').value, 10);
+  if (isNaN(startVal) || startVal < 11 || startVal > 5000) { showToast('Starting score must be between 11 and 5000'); return; }
+  selectedStartScore = startVal;
   doubleOutEnabled = document.getElementById('doubleOutToggle').checked;
   players = names.map(name => ({
     name,
@@ -405,11 +401,6 @@ function loadState() {
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('footerYear').textContent = new Date().getFullYear();
-
-  // Starting score segmented buttons
-  document.querySelectorAll('#startingScoreBtns button').forEach(btn => {
-    btn.addEventListener('click', () => selectStartScore(parseInt(btn.dataset.val, 10)));
-  });
 
   // Player count slider
   document.getElementById('playerCount').addEventListener('input', updateSetup);
