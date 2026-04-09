@@ -232,11 +232,10 @@ function checkForWinner() {
 }
 
 function showWinner(card) {
-  const overlay = document.getElementById("winnerOverlay");
   const msg = document.getElementById("winnerMessage");
-  const cardLabel = card.n === 1 ? "Ace" : card.n;
+  const cardLabel = card.n === 1 ? "Ace" : String(card.n);
   msg.textContent = `${cardLabel} of Spades is the winner! Would you like to play again?`;
-  overlay.classList.remove("hidden");
+  openWinnerOverlay('winnerOverlay', 'blind-killer', cardLabel, used.map(c => c.n === 1 ? 'Ace' : String(c.n)));
 }
 
 function showCardList() {

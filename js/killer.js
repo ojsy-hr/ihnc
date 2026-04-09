@@ -147,7 +147,9 @@ function applyKill(targetIdx, overlayEl) {
   const alive = players.filter(pl => !pl.eliminated);
   if (alive.length === 1) {
     document.getElementById('winnerMsg').textContent = `🏆 ${alive[0].name} wins!`;
-    setTimeout(() => openOverlay('winnerOverlay'), 400);
+    const _kWinner = alive[0].name;
+    const _kPlayers = players.map(p => p.name);
+    setTimeout(() => openWinnerOverlay('winnerOverlay', 'killer', _kWinner, _kPlayers), 400);
     return;
   }
 

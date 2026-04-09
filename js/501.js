@@ -345,7 +345,7 @@ function showWinner(name) {
       navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
     }
   };
-  openOverlay('winnerOverlay');
+  openWinnerOverlay('winnerOverlay', '501', name, players.map(p => p.name));
 }
 
 function resetGame() {

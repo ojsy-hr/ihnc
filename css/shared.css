@@ -621,6 +621,38 @@ footer {
 }
 .share-toast.show { transform: translateX(-50%) translateY(0); }
 
+/* ── Game Night pill ── */
+#sessionPill {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--accent);
+  border-radius: 2rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  box-shadow: 0 2px 14px rgba(97, 218, 251, 0.18);
+  z-index: 900;
+  white-space: nowrap;
+  transition: opacity var(--transition), transform var(--transition);
+}
+#sessionPill:hover { opacity: 0.8; transform: translateY(-1px); }
+
+/* "Add to Game Night" button injected into winner overlays */
+.session-add-btn {
+  margin-top: 0.6rem;
+  width: 100%;
+  border: 1px dashed var(--accent) !important;
+  color: var(--accent) !important;
+  background: transparent !important;
+}
+.session-add-btn:hover:not(:disabled) {
+  background: rgba(97, 218, 251, 0.08) !important;
+}
+
 /* ── Utilities ── */
 .hidden { display: none !important; }
 .text-center { text-align: center; }

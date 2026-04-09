@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game Night — ihavenocards</title>
+    <meta name="description" content="Track who's winning overall tonight. Start a Game Night session and log results across all your games." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/game-night/" />
+    <link rel="stylesheet" href="../../css/shared.css" />
+    <link rel="stylesheet" href="../../css/game_night.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../about/">About</a>
+            <a href="../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <span class="current">Game Night</span>
+      </nav>
+
+      <!-- ── SETUP SECTION ── -->
+      <div id="setupSection">
+        <h1>🏆 Game Night</h1>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem">
+          Start a session to track who wins overall across all your games tonight.
+        </p>
+
+        <div class="controls">
+          <label class="fiveo1-seg-label" for="nightNameInput">What are you calling tonight?</label>
+          <input type="text" id="nightNameInput" class="gn-name-input"
+                 placeholder="Game Night" maxlength="40" />
+
+          <label style="color:var(--text-muted)">Players:
+            <input type="range" id="playerCount" min="2" max="8" value="2"
+                   style="margin:0.5rem 1rem 0;width:150px" />
+            <span id="playerCountDisplay">2</span>
+          </label>
+
+          <div id="nameInputs" style="margin-top:1rem"></div>
+
+          <button class="btn btn-primary btn-lg mt-2" onclick="startNight()">Start Game Night</button>
+        </div>
+      </div>
+
+      <!-- ── ACTIVE SESSION SECTION ── -->
+      <div id="activeSection" class="hidden">
+
+        <div class="gn-header">
+          <h1 class="gn-night-name" id="nightNameDisplay">Game Night</h1>
+          <div class="gn-duration" id="durationDisplay">Just started</div>
+        </div>
+
+        <p class="gn-section-label">Leaderboard</p>
+        <div id="leaderboard" class="gn-leaderboard"></div>
+
+        <p class="gn-section-label">Results</p>
+        <div id="timeline" class="gn-timeline"></div>
+
+        <div class="gn-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openOverlay('manualAddOverlay')">
+            ➕ Add Result
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="openOverlay('endNightConfirmOverlay')">
+            End Night
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Manual Add overlay ── -->
+    <div id="manualAddOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2>Add a Result</h2>
+        <div style="margin:1rem 0;text-align:left">
+          <label class="fiveo1-seg-label" for="manualGameSelect">Game</label>
+          <select id="manualGameSelect" class="gn-name-input" style="margin-bottom:1rem"></select>
+
+          <label class="fiveo1-seg-label" for="manualWinnerSelect">Winner</label>
+          <select id="manualWinnerSelect" class="gn-name-input"></select>
+        </div>
+        <button class="btn btn-primary" onclick="submitManualResult()">Add Result</button>
+        <button class="btn btn-ghost mt-1" onclick="closeOverlay('manualAddOverlay')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- ── End Night confirm overlay ── -->
+    <div id="endNightConfirmOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2>End the Night?</h2>
+        <p style="color:var(--text-muted);margin:0.5rem 0 1rem">
+          Your results will be saved and the session will close.
+        </p>
+        <button class="btn btn-danger" onclick="endNight()">Yes, end it</button>
+        <button class="btn btn-ghost mt-1" onclick="closeOverlay('endNightConfirmOverlay')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- ── Summary overlay ── -->
+    <div id="summaryOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2 id="summaryWinnerMsg">🏆</h2>
+        <div class="gn-summary-meta" id="summaryMeta"></div>
+        <table class="gn-summary-table" id="summaryTable"></table>
+        <button class="btn btn-outline" id="summaryShareBtn">📤 Share</button>
+        <button class="btn btn-primary mt-1" onclick="startNewNight()">Start New Night</button>
+        <button class="btn btn-ghost mt-1" onclick="closeOverlay('summaryOverlay')">Close</button>
+      </div>
+    </div>
+
+    <footer>&copy; <span id="footerYear"></span> ihavenocards. All rights reserved.</footer>
+
+    <script src="../../js/shared.js"></script>
+    <script src="../../js/games-data.js"></script>
+    <script src="../../js/achievements.js"></script>
+    <script src="../../js/game_night.js"></script>
+    <script src="../../js/analytics.js" defer></script>
+  </body>
+</html>

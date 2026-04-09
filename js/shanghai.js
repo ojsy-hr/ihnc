@@ -103,11 +103,13 @@ function throwDart(mult) {
     const mults = turnDarts.map(d => d.mult);
     if (mults.includes(1) && mults.includes(2) && mults.includes(3)) {
       // SHANGHAI!
+      const _sWinner = players[currentPlayerIdx].name;
+      const _sPlayers = players.map(p => p.name);
       setTimeout(() => {
-        document.getElementById('winnerMsg').textContent = `🎯 SHANGHAI! ${players[currentPlayerIdx].name} wins instantly!`;
+        document.getElementById('winnerMsg').textContent = `🎯 SHANGHAI! ${_sWinner} wins instantly!`;
         document.getElementById('shareWinBtn').onclick = () =>
-          shareResult(`🎯 ${players[currentPlayerIdx].name} hit a Shanghai in Round ${currentRound}! ihavenocards.com/pages/darts/shanghai/`);
-        openOverlay('winnerOverlay');
+          shareResult(`🎯 ${_sWinner} hit a Shanghai in Round ${currentRound}! ihavenocards.com/pages/darts/shanghai/`);
+        openWinnerOverlay('winnerOverlay', 'shanghai', _sWinner, _sPlayers);
       }, 300);
       renderState();
       return;
@@ -173,7 +175,8 @@ function endGame() {
   document.getElementById('winnerMsg').textContent = msg;
   document.getElementById('shareWinBtn').onclick = () =>
     shareResult(msg + ' — Shanghai on ihavenocards.com/pages/darts/shanghai/');
-  openOverlay('winnerOverlay');
+  const _endWinner = tied.length > 1 ? tied[0].name : winner.name;
+  openWinnerOverlay('winnerOverlay', 'shanghai', _endWinner, players.map(p => p.name));
 }
 
 function resetGame() {

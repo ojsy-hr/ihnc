@@ -162,6 +162,83 @@ function showToast(msg) {
   toast._t = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
+// ── Game Night Session ─────────────────────────────────────
+const SESSION_KEY = 'ihnc_session';
+
+function getActiveSession() {
+  const s = Store.get(SESSION_KEY, null);
+  return (s && s.active) ? s : null;
+}
+
+function sessionIsActive() { return !!getActiveSession(); }
+
+function logSessionResult(gameId, winnerName, allPlayerNames) {
+  const session = getActiveSession();
+  if (!session) return;
+  const gameData = (typeof getById === 'function') ? getById(gameId) : null;
+  session.results.push({
+    gameId,
+    gameName: gameData ? gameData.name : gameId,
+    winner: winnerName,
+    allPlayers: allPlayerNames || [],
+    timestamp: Date.now(),
+  });
+  Store.set(SESSION_KEY, session);
+  refreshSessionPill();
+  showToast(`${winnerName}'s win added to Game Night! 🏆`);
+}
+
+// Replaces openOverlay for winner screens — injects "Add to Game Night" button when session active
+function openWinnerOverlay(overlayId, gameId, winnerName, allPlayerNames) {
+  openOverlay(overlayId);
+  if (!sessionIsActive()) return;
+
+  const content = document.querySelector('#' + overlayId + ' .overlay-content');
+  if (!content || content.querySelector('.session-add-btn')) return;
+
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-sm session-add-btn';
+  btn.textContent = '➕ Add to Game Night';
+  btn.onclick = () => {
+    logSessionResult(gameId, winnerName, allPlayerNames);
+    btn.textContent = '✅ Added to Game Night!';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+  };
+  content.appendChild(btn);
+}
+
+// Floating session pill — injected on any page when a session is active
+function initSessionPill() {
+  // Don't show pill on the game-night page itself
+  if (location.pathname.includes('game-night')) return;
+  if (!sessionIsActive()) return;
+  if (document.getElementById('sessionPill')) return;
+
+  const pill = document.createElement('a');
+  pill.id = 'sessionPill';
+  pill.href = '/pages/game-night/';
+  pill.setAttribute('aria-label', 'View Game Night');
+  document.body.appendChild(pill);
+  refreshSessionPill(pill);
+}
+
+function refreshSessionPill(pill) {
+  const el = pill || document.getElementById('sessionPill');
+  if (!el) return;
+  const session = getActiveSession();
+  if (!session) { el.remove(); return; }
+
+  const tally = {};
+  session.results.forEach(r => { tally[r.winner] = (tally[r.winner] || 0) + 1; });
+  const entries = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+  const count = session.results.length;
+
+  el.textContent = count === 0
+    ? '🏆 Game Night'
+    : `🏆 ${entries[0][0]} leads · ${count} game${count !== 1 ? 's' : ''}`;
+}
+
 // ── PWA Install Prompt ─────────────────────────────────────
 let _deferredInstall = null;
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -188,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const installBtn = document.getElementById('installBtn');
   if (installBtn) installBtn.addEventListener('click', triggerInstall);
+
+  initSessionPill();
 });
 
 // ── Service Worker Registration ────────────────────────────

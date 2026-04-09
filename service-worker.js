@@ -1,6 +1,6 @@
 /* ihavenocards — Service Worker (cache-first) */
 
-const CACHE = 'ihnc-v5';
+const CACHE = 'ihnc-v6';
 
 const PRECACHE = [
   '/',
@@ -43,6 +43,10 @@ const PRECACHE = [
   '/pages/darts/501/',
   '/pages/darts/501/index.html',
   '/js/501.js',
+  '/pages/game-night/',
+  '/pages/game-night/index.html',
+  '/js/game_night.js',
+  '/css/game_night.css',
   '/pages/pool/',
   '/pages/pool/index.html',
   '/pages/pool/cutthroat/',

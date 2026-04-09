@@ -509,7 +509,7 @@ function checkForWinner() {
 
 function showWinnerPopup(name) {
   winnerNameDisplay.textContent = `${name} wins the game!`;
-  winnerPopup.classList.remove("hidden");
+  openWinnerOverlay('winnerPopup', 'cricket', name, players.map(p => p.name));
 }
 
 function goHome() {

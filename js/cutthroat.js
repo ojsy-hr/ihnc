@@ -107,7 +107,9 @@ function checkWin() {
         'https://ihavenocards.com/pages/pool/cutthroat/'
       );
 
-    setTimeout(() => openOverlay('winnerOverlay'), 400);
+    const _ctWinner = alive[0].name;
+    const _ctPlayers = players.map(p => p.name);
+    setTimeout(() => openWinnerOverlay('winnerOverlay', 'cutthroat', _ctWinner, _ctPlayers), 400);
   }
 }
 
