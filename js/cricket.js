@@ -110,6 +110,7 @@ function renderNameInputs(count) {
 }
 
 renderNameInputs(playerCountSlider.value);
+applySessionToGame();
 
 winRuleToggle.addEventListener("change", () => {
   instantWinMode = winRuleToggle.checked;

@@ -133,6 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('footerYear').textContent = new Date().getFullYear();
   trackGame('cutthroat');
 
+  // Pre-fill player names from active Game Night session
+  const _sessionPlayers = getSessionPlayers();
+  if (_sessionPlayers) {
+    ['p1Name', 'p2Name', 'p3Name'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && _sessionPlayers[i]) el.value = _sessionPlayers[i];
+    });
+  }
+
   document.getElementById('howToPlayBtn').addEventListener('click', () => openOverlay('rulesOverlay'));
   document.getElementById('closeRulesBtn').addEventListener('click', () => closeOverlay('rulesOverlay'));
 });

@@ -106,7 +106,7 @@ function renderLeaderboard(session) {
 function renderTimeline(session) {
   const el = document.getElementById('timeline');
   if (session.results.length === 0) {
-    el.innerHTML = '<p class="gn-empty-state">Go play a game and add the result here!</p>';
+    el.innerHTML = '<p class="gn-empty-state">Go play a game — wins are tracked automatically! 🎯</p>';
     return;
   }
 

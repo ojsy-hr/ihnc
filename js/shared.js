@@ -188,24 +188,44 @@ function logSessionResult(gameId, winnerName, allPlayerNames) {
   showToast(`${winnerName}'s win added to Game Night! 🏆`);
 }
 
-// Replaces openOverlay for winner screens — injects "Add to Game Night" button when session active
+// Replaces openOverlay for winner screens — auto-logs result when a session is active
 function openWinnerOverlay(overlayId, gameId, winnerName, allPlayerNames) {
   openOverlay(overlayId);
-  if (!sessionIsActive()) return;
-
-  const content = document.querySelector('#' + overlayId + ' .overlay-content');
-  if (!content || content.querySelector('.session-add-btn')) return;
-
-  const btn = document.createElement('button');
-  btn.className = 'btn btn-sm session-add-btn';
-  btn.textContent = '➕ Add to Game Night';
-  btn.onclick = () => {
+  if (sessionIsActive()) {
     logSessionResult(gameId, winnerName, allPlayerNames);
-    btn.textContent = '✅ Added to Game Night!';
-    btn.disabled = true;
-    btn.style.opacity = '0.6';
-  };
-  content.appendChild(btn);
+  }
+}
+
+// Pre-fills player count + name inputs from the active session.
+// Call once per game in DOMContentLoaded after the initial updateSetup() call.
+// Works for any game that uses #playerCount (range) + #nameInputs (text inputs).
+function applySessionToGame() {
+  const session = getActiveSession();
+  if (!session || !session.players || session.players.length < 2) return;
+  const players = session.players;
+
+  const countEl = document.getElementById('playerCount');
+  if (countEl) {
+    const min   = parseInt(countEl.min, 10) || 2;
+    const max   = parseInt(countEl.max, 10) || 8;
+    const count = Math.min(Math.max(players.length, min), max);
+    countEl.value = count;
+    // Dispatch 'input' so the game's own slider listener rebuilds name inputs
+    countEl.dispatchEvent(new Event('input'));
+  }
+
+  // Fill text inputs after the tick in which updateSetup()/renderNameInputs() ran
+  setTimeout(() => {
+    document.querySelectorAll('#nameInputs input[type="text"]').forEach((inp, i) => {
+      if (players[i]) inp.value = players[i];
+    });
+  }, 0);
+}
+
+// Returns the session player names array, or null if no active session.
+function getSessionPlayers() {
+  const session = getActiveSession();
+  return session ? session.players : null;
 }
 
 // Floating session pill — injected on any page when a session is active

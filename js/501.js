@@ -405,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Player count slider
   document.getElementById('playerCount').addEventListener('input', updateSetup);
   updateSetup();
+  applySessionToGame();
 
   // How to play
   document.getElementById('howToPlayBtn').addEventListener('click', () => openOverlay('rulesOverlay'));

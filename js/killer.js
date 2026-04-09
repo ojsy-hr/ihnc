@@ -195,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('footerYear').textContent = new Date().getFullYear();
   trackGame('killer');
   updateSetup();
+  applySessionToGame();
 
   document.getElementById('howToPlayBtn').addEventListener('click', () => openOverlay('rulesOverlay'));
   document.getElementById('closeRulesBtn').addEventListener('click', () => closeOverlay('rulesOverlay'));

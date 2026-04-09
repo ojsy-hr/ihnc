@@ -641,18 +641,6 @@ footer {
 }
 #sessionPill:hover { opacity: 0.8; transform: translateY(-1px); }
 
-/* "Add to Game Night" button injected into winner overlays */
-.session-add-btn {
-  margin-top: 0.6rem;
-  width: 100%;
-  border: 1px dashed var(--accent) !important;
-  color: var(--accent) !important;
-  background: transparent !important;
-}
-.session-add-btn:hover:not(:disabled) {
-  background: rgba(97, 218, 251, 0.08) !important;
-}
-
 /* ── Utilities ── */
 .hidden { display: none !important; }
 .text-center { text-align: center; }
