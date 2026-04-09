@@ -162,6 +162,17 @@ const GAMES = [
     badge: 'new',
     tags: ['competitive', 'long', 'darts'],
   },
+  {
+    id: '501',
+    name: '501',
+    emoji: '🎯',
+    category: 'darts',
+    players: '2–8',
+    description: 'Classic darts scorer. Count down from 501, 301 or any target. Bust rules, double-out option, and voice score announcements.',
+    url: '/pages/darts/501/',
+    badge: 'new',
+    tags: ['competitive', 'medium', 'darts'],
+  },
 
   // ── Pool ──────────────────────────────────────────────────
   {

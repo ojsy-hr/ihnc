@@ -1,0 +1,160 @@
+/* ==========================================================
+   ihavenocards — 501 Darts styles
+   ========================================================== */
+
+.fiveo1-option-row {
+  margin: 1rem 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.fiveo1-seg-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.fiveo1-seg-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.fiveo1-seg-btns button {
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.fiveo1-seg-btns button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.fiveo1-seg-btns button.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(97, 218, 251, 0.12);
+}
+
+.fiveo1-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.fiveo1-toggle-label input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+/* Large remaining score */
+.fiveo1-big-score {
+  font-size: 2.8rem !important;
+  font-weight: 800 !important;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* Per-player score colour states */
+.fiveo1-score-danger { color: var(--danger) !important; }
+.fiveo1-score-warning { color: #fbbf24 !important; }
+
+/* Bust banner */
+.fiveo1-bust-banner {
+  background: rgba(212, 62, 62, 0.12);
+  border: 2px solid var(--danger);
+  border-radius: var(--radius);
+  color: var(--danger);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.55rem 1.5rem;
+  margin: 0.75rem auto;
+  max-width: 300px;
+  animation: bustShake 0.35s ease;
+}
+
+@keyframes bustShake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-7px); }
+  75%       { transform: translateX(7px); }
+}
+
+/* Turn input area */
+.fiveo1-input-area {
+  margin: 1.25rem auto 0;
+  max-width: 320px;
+}
+
+.fiveo1-input-label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.fiveo1-score-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fiveo1-score-input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Checkout hint */
+.fiveo1-checkout-hint {
+  margin: 0.6rem auto 0;
+  max-width: 320px;
+  background: rgba(27, 138, 73, 0.12);
+  border: 1px solid var(--success);
+  border-radius: var(--radius);
+  color: #4caf7d;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  text-align: center;
+}
+
+/* Scoreboard progress % */
+.darts-player-detail {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 480px) {
+  .fiveo1-big-score { font-size: 2.2rem !important; }
+  .fiveo1-score-input { font-size: 1.6rem; }
+}

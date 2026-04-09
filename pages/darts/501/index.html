@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>501 Darts Scorer — ihavenocards</title>
+    <meta name="description" content="Free 501 darts scorer for 2–8 players. Count down from 501, 301 or any target. Bust rules, double-out option, and voice score announcements." />
+    <meta name="theme-color" content="#1f1f1f" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://ihavenocards.com/pages/darts/501/" />
+    <link rel="stylesheet" href="../../../css/shared.css" />
+    <link rel="stylesheet" href="../../../css/darts-game.css" />
+    <link rel="stylesheet" href="../../../css/darts_501.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">ihavenocards</a>
+      <div class="nav-right">
+        <div class="nav-menu-wrapper">
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          <div class="nav-links" aria-hidden="true">
+            <a href="/games/">Games</a>
+            <a href="../../about/">About</a>
+            <a href="../../feedback/">Feedback</a>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep">›</span>
+        <a href="../../darts/">Darts</a><span class="sep">›</span>
+        <span class="current">501</span>
+      </nav>
+
+      <h1>501 Darts 🎯</h1>
+      <button id="howToPlayBtn" class="how-to-play-btn">How to Play</button>
+
+      <!-- ── SETUP SECTION ── -->
+      <div id="setupSection" class="controls">
+
+        <div class="fiveo1-option-row">
+          <span class="fiveo1-seg-label">Starting Score</span>
+          <div id="startingScoreBtns" class="fiveo1-seg-btns">
+            <button data-val="101">101</button>
+            <button data-val="201">201</button>
+            <button data-val="301">301</button>
+            <button data-val="401">401</button>
+            <button data-val="501" class="active">501</button>
+            <button data-val="701">701</button>
+            <button data-val="1001">1001</button>
+          </div>
+        </div>
+
+        <div class="fiveo1-option-row">
+          <label class="fiveo1-toggle-label">
+            <input type="checkbox" id="doubleOutToggle" />
+            Double Out — must finish on a double (or bullseye)
+          </label>
+        </div>
+
+        <label style="color:var(--text-muted)">Players:
+          <input type="range" id="playerCount" min="2" max="8" value="2"
+                 style="margin:0.5rem 1rem 0;width:150px" />
+          <span id="playerCountDisplay">2</span>
+        </label>
+
+        <div id="nameInputs" style="margin-top:1rem"></div>
+
+        <button class="btn btn-primary btn-lg mt-2" onclick="startGame()">Start Game</button>
+      </div>
+
+      <!-- ── GAME SECTION ── -->
+      <div id="gameSection" class="hidden">
+
+        <div class="darts-info-row">
+          <div class="darts-info-box">
+            <div class="darts-info-val" id="currentTurnDisplay">-</div>
+            <div class="darts-info-label">Current player</div>
+          </div>
+          <div class="darts-info-box">
+            <div class="darts-info-val fiveo1-big-score" id="currentScoreDisplay">501</div>
+            <div class="darts-info-label">Remaining</div>
+          </div>
+        </div>
+
+        <div id="bustBanner" class="fiveo1-bust-banner hidden">BUST! Score reverts.</div>
+
+        <div id="scoreboard" class="darts-scoreboard"></div>
+
+        <div class="fiveo1-input-area">
+          <label class="fiveo1-input-label" for="turnScore">Turn Score (0–180)</label>
+          <input type="number" id="turnScore" class="fiveo1-score-input"
+                 min="0" max="180" inputmode="numeric" placeholder="0" />
+          <div class="darts-action-row" style="margin-top:0.75rem">
+            <button class="btn btn-danger btn-sm" onclick="undoTurn()">↩ Undo</button>
+            <button class="btn btn-primary" onclick="submitTurn()">Submit ✓</button>
+          </div>
+        </div>
+
+        <div id="checkoutHint" class="fiveo1-checkout-hint hidden"></div>
+
+        <div style="margin-top:1.5rem">
+          <button class="btn btn-ghost btn-sm" onclick="confirmResetGame()">Reset Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Winner overlay ── -->
+    <div id="winnerOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2 id="winnerMsg">🏆</h2>
+        <button class="btn btn-outline" id="shareWinBtn">📤 Share</button>
+        <button class="btn btn-primary mt-1"
+                onclick="closeOverlay('winnerOverlay'); resetGame()">Play Again</button>
+      </div>
+    </div>
+
+    <!-- ── Double-out confirm overlay ── -->
+    <div id="doubleConfirmOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2>🎯 Finish!</h2>
+        <p style="color:var(--text-muted);margin:0.5rem 0 1rem">
+          Did you finish on a <strong>double</strong> (or bullseye)?
+        </p>
+        <button id="doubleConfirmYes" class="btn btn-primary">Yes, I did!</button>
+        <button id="doubleConfirmNo" class="btn btn-danger mt-1">No — Bust!</button>
+      </div>
+    </div>
+
+    <!-- ── Reset confirm overlay ── -->
+    <div id="resetConfirmOverlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2>Reset Game?</h2>
+        <p style="color:var(--text-muted);margin:0.5rem 0 1rem">
+          All scores will be lost.
+        </p>
+        <button class="btn btn-danger" onclick="doResetGame()">Yes, reset</button>
+        <button class="btn btn-ghost mt-1" onclick="closeOverlay('resetConfirmOverlay')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- ── Rules overlay ── -->
+    <div id="rulesOverlay" class="overlay hidden">
+      <div class="overlay-content rules-content">
+        <h2>501 Darts</h2>
+        <h3 class="rules-subtitle">How to Play</h3>
+        <div class="rules-section">
+          <h3>The Game</h3>
+          <p>Each player starts at the chosen score (default 501) and counts down to exactly zero. Enter your turn's total score and hit Submit after each round of 3 darts.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Bust</h3>
+          <p>If your score would go below zero, or you'd land on 1 (which can't be finished with a double), your turn is a bust — your score stays the same and play passes to the next player.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Double Out</h3>
+          <p>When the Double Out option is on, you must finish the game by hitting a double (or the bullseye) as your last dart. If you reach zero without a valid double finish, it's a bust.</p>
+        </div>
+        <div class="rules-section">
+          <h3>Checkout Hints</h3>
+          <p>When your remaining score is 170 or below, a suggested checkout route will appear below the input.</p>
+        </div>
+        <button id="closeRulesBtn" class="btn btn-primary">Got it</button>
+      </div>
+    </div>
+
+    <footer>&copy; <span id="footerYear"></span> ihavenocards. All rights reserved.</footer>
+
+    <script src="../../../js/shared.js"></script>
+    <script src="../../../js/achievements.js"></script>
+    <script src="../../../js/501.js"></script>
+    <script src="../../../js/analytics.js" defer></script>
+  </body>
+</html>
